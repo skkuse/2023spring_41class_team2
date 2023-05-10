@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON prisma_app.* TO 'root'@'%';
+FLUSH PRIVILEGES;
