@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -11,15 +12,51 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  userid String @unique
-  password String
-  nickname String @unique
-  email String @unique
-  role UserRole @default(USER)
+  id        Int      @id @default(autoincrement())
+  userid    String   @unique
+  password  String
+  nickname  String   @unique
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isAdmin   Boolean  @default(false)
+  Solved    Solved[] //refers to many-to-many relation between user and problem
 }
 
-enum UserRole {
-  USER
-  ADMIN
+model Problem {
+  id                Int                 @id @default(autoincrement())
+  title             String
+  content           String? //? refers to optional
+  answer            String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  hidden            Boolean             @default(false)
+  Solved            Solved[] //refers to many-to-many relation between user and problem
+  SuggestedQuestion SuggestedQuestion[] //refers to one-to-many relation between problem and suggestedquestion
+}
+
+model Solved {
+  id        Int       @id @default(autoincrement())
+  userid    String
+  problemid Int
+  status    Int       @default(0)
+  user      User      @relation(fields: [userid], references: [userid])
+  problem   Problem   @relation(fields: [problemid], references: [id])
+  Chatlog   Chatlog[] //refers to one-to-many relation between solved and chatlog
+}
+
+model SuggestedQuestion {
+  id        Int     @id @default(autoincrement())
+  problemid Int
+  content   String
+  answer    String?
+  problem   Problem @relation(fields: [problemid], references: [id])
+}
+
+model Chatlog {
+  id        Int      @id @default(autoincrement())
+  solvedid  Int
+  createdAt DateTime @default(now())
+  content   String
+  solved    Solved   @relation(fields: [solvedid], references: [id])
 }
