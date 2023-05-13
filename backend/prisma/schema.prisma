@@ -20,6 +20,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isAdmin   Boolean  @default(false)
+  isBanned  Boolean  @default(false)
+  credit    Int      @default(0)
   Solved    Solved[] //refers to many-to-many relation between user and problem
 }
 
