@@ -12,8 +12,6 @@ RUN npm install
 COPY . .
 
 RUN apk add --no-cache bash
-COPY wait-for-it.sh ./wait-for-it.sh
-RUN chmod +x ./wait-for-it.sh
 
 RUN npx prisma generate
 RUN npm run build
