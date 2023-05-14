@@ -24,8 +24,8 @@ export class ProblemsController {
     return problems;
   }
 
-  //해당 문제의 모든 질문들
-  @Get(':problemId/questions')
+  // Every Question for this problem
+  // @Get(':problemId/questions')
 
 
 

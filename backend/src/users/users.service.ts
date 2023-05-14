@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
@@ -26,9 +26,22 @@ export class UsersService {
         return users;
     }
 
-    async createUser(userData: CreateUserDto): Promise<CreateUserDto> {
-        return this.prisma.user.create({
-            data: userData
-        });
+    async createUser(userData: CreateUserDto): Promise<User> {
+        // return this.prisma.user.create({
+        //     data: userData
+        // });
+        try {
+            return await this.prisma.user.create({ 
+                data: userData })
+        } 
+        catch (e) {
+            if (e instanceof Prisma.PrismaClientKnownRequestError) {
+              if (e.code === 'P2002') {
+                console.log('There is a unique constraint violation');
+              }
+            }
+            //throw e
+        }
+
     }
 }
