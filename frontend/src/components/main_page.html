@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Security Edu - Main Page</title>
+  <style>
+    /* 스타일링을 위한 CSS 코드 */
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #header {
+      text-align: center;
+      padding: 20px;
+    }
+
+    #menu-bar {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    #content {
+      display: flex;
+      flex-direction: row;
+    }
+
+    #problem-list {
+      flex: 2;
+      padding: 20px;
+    }
+
+    #ranking {
+      flex: 1;
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <h1>Security Edu</h1>
+  </header>
+
+  <div id="menu-bar">
+    <ul>
+      <li><a href="#">My Page</a></li>
+    </ul>
+  </div>
+
+  <div id="content">
+    <div id="problem-list">
+      <h2>문제 목록</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>문제 번호</th>
+            <th>문제 제목</th>
+            <th>Solved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>문제 1</td>
+            <td>O</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>문제 2</td>
+            <td>X</td>
+          </tr>
+          <!-- 추가적인 문제 행을 여기에 추가 -->
+        </tbody>
+      </table>
+    </div>
+
+    <div id="ranking">
+      <h2>랭킹</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>사용자</th>
+            <th>점수</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>User1</td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>User2</td>
+            <td>90</td>
+          </tr>
+          <!-- 추가적인 랭킹 행을 여기에 추가 -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
