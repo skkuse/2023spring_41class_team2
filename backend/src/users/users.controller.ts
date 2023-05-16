@@ -16,7 +16,7 @@ export class UsersController {
   async findAllUsers(): Promise<User[]> {
     return this.usersService.findAllUsers();
   }
-
+  
   @Post()
   async createUser(@Body() userData: CreateUserDto): Promise<any> {
     return this.usersService.createUser(userData);
