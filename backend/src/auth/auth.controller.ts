@@ -1,4 +1,11 @@
-import { Controller, Request, Post, UseGuards, Body, Res } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Post,
+  UseGuards,
+  Body,
+  Res,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { User } from '@prisma/client';
@@ -12,10 +19,11 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('login')
-  async login(@Body('userid') userid: string, 
-              @Body('password') password: string, 
-              @Res() res: Response
-    ) : Promise<any> {
+  async login(
+    @Body('userid') userid: string,
+    @Body('password') password: string,
+    @Res() res: Response,
+  ): Promise<any> {
     const jwt = await this.authService.validateUser(userid, password);
     res.setHeader('Authorization', 'Bearer ' + jwt.accessToken);
     return res.json(jwt);
@@ -23,13 +31,12 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Post('logout')
-  async logout(@Request() req){
+  async logout(@Request() req) {
     return this.authService.logout(req.user);
   }
 
   @Post('signup')
-  async signup(@Body() userData: CreateUserDto){
+  async signup(@Body() userData: CreateUserDto) {
     return this.authService.signup(userData);
   }
-
 }
