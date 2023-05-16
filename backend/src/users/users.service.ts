@@ -8,13 +8,12 @@ export class UsersService {
     constructor(private prisma: PrismaService){}
 
     async findUserById(userId: string): Promise<User> {
-        const user =  this.prisma.user.findUnique({
+        const user = await this.prisma.user.findUniqueOrThrow({
             where: {
                 userid: userId,
             },
         });
 
-        if (!user) throw new NotFoundException(`User with ID ${userId} not found`);
         return user;
     }
 
@@ -27,7 +26,7 @@ export class UsersService {
     }
 
     async createUser(userData: CreateUserDto): Promise<CreateUserDto> {
-        return this.prisma.user.create({
+        return await this.prisma.user.create({
             data: userData
         });
     }

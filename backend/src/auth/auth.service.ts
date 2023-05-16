@@ -8,38 +8,38 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
-  ) {}
+    constructor(
+        private usersService: UsersService,
+        private jwtService: JwtService
+    ) {}
 
-  async validateUser(userid: string, pass: string): Promise<any> {
-    const user = await this.usersService.findUserById(userid);
-    const match = await bcrypt.compare(pass, user.password);
-    if (!user || !match) {
-      throw new UnauthorizedException();
+    async validateUser(userid: string, pass: string): Promise<any> {
+        const user = await this.usersService.findUserById(userid);
+        const match = await bcrypt.compare(pass, user.password);
+        if (!user || !match) {
+            throw new UnauthorizedException();
+        }
+        const payload = { userid: user.userid, isAdmin: user.isAdmin };
+
+        const result =  {
+            accessToken: this.jwtService.sign(payload),
+        };
+
+        console.log(result);
+
+        return result;
     }
-    const payload = { userid: user.userid };
 
-    const result = {
-      accessToken: this.jwtService.sign(payload),
-    };
+    async logout(user: User) {
+        //need to implement invalidating token
+        return {
+            message: `User ${user.userid} logged out`,
+        };
+    }
 
-    console.log(result);
-
-    return result;
-  }
-
-  async logout(user: User) {
-    //need to implement invalidating token
-    return {
-      message: `User ${user.userid} logged out`,
-    };
-  }
-
-  async signup(user: CreateUserDto) {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(user.password, salt);
+    async signup(user: CreateUserDto) {
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(user.password, salt);
 
     const newUser = await this.usersService.createUser({
       ...user,
@@ -51,4 +51,8 @@ export class AuthService {
 
     return result as SignupResponseUserDto;
   }
+
+    async tokenValidate(payload: any): Promise<any> {
+        return await this.usersService.findUserById(payload.userid);
+    }
 }
