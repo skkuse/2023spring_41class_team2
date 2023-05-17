@@ -5,35 +5,32 @@ import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
-    @Get(':userId')
-    async findUserById(@Param('userId') userId: string): Promise<User> {
-        return this.usersService.findUserById(userId);
-    }
+  @Get(':userId')
+  async findUserById(@Param('userId') userId: string): Promise<User> {
+    return await this.usersService.findUserById(userId);
+  }
 
-    @Get()
-    async findAllUsers(): Promise<User[]> {
-        return this.usersService.findAllUsers();
-    }
+  @Get()
+  async findAllUsers(): Promise<User[]> {
+    return await this.usersService.findAllUsers();
+  }
 
-    @Post()
-    async createUser(@Body() userData: CreateUserDto): Promise<any> {
-        return this.usersService.createUser(userData);
-    }
+  @Post()
+  async createUser(@Body() userData: CreateUserDto): Promise<any> {
+    return await this.usersService.createUser(userData);
+  }
 
-    //유저가 풀어본 문제들
-    // @Get(':userId/solved')
+  //유저가 풀어본 문제들
+  // @Get(':userId/solvedlist')
 
+  //유저의 해당 문제 풀이 상태 갱신
+  // @Put(':userId/solved/:problemId')
 
-    //유저의 해당 문제 풀이 상태 갱신
-    // @Put(':userId/solved/:problemId')
+  //문제 제출
+  // @Post(':userId/solved/:problemId')
 
-    //문제 제출
-    // @Post(':userId/solved/:problemId')
-
-    //유저가 푼 문제의 채팅 로그
-    // @Get(':userId/solved/:problemId/chat')
-
-
+  //유저가 푼 문제의 채팅 로그
+  // @Get(':userId/solved/:problemId/chat')
 }
