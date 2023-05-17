@@ -4,30 +4,41 @@ import { Problem } from '@prisma/client';
 
 @Injectable()
 export class ProblemsService {
-    constructor(private prisma: PrismaService){}
+  constructor(private prisma: PrismaService) {}
 
-    async findProblemById(problemId: number): Promise<Problem> {
-        const problem = await this.prisma.problem.findUnique({
-            where: {
-                id: problemId,
-            },
-        });
+  async findProblemById(problemId: number): Promise<Problem> {
+    const problem = await this.prisma.problem.findUnique({
+      where: {
+        id: problemId,
+      },
+    });
 
-        if (!problem) throw new NotFoundException(`Problem with ID ${problemId} not found`);
+    if (!problem)
+      throw new NotFoundException(`Problem with ID ${problemId} not found`);
 
-        return problem;
-    }
+    return problem;
+  }
 
-    async getAllProblems(): Promise<any> {
-        const problems = await this.prisma.problem.findMany({
-            select: {
-                id: true,
-                title: true,
-            },
-        });
+  async getAllProblems(): Promise<any> {
+    const problems = await this.prisma.problem.findMany({
+      select: {
+        id: true,
+        title: true,
+      },
+    });
 
-        if (!problems || problems.length === 0) throw new NotFoundException('No problems found');
-        return problems;
-    }
+    if (!problems || problems.length === 0)
+      throw new NotFoundException('No problems found');
+    return problems;
+  }
 
+  async saveFileData(fileData: {
+    filename: string;
+    path: string;
+    mimetype: string;
+  }) {
+    const newFileData = await this.prisma.file.create(fileData);
+    await this.prisma.file.save(fileData);
+    return newFileData;
+  }
 }

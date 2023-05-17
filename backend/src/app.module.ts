@@ -6,6 +6,7 @@ import { PrismaService } from './prisma.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProblemsModule } from './problems/problems.module';
+import * as Joi from '@hapi/joi';
 
 @Module({
   imports: [ConfigModule.forRoot(), UsersModule, AuthModule, ProblemsModule],

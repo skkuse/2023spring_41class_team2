@@ -35,6 +35,16 @@ model Problem {
   hidden            Boolean             @default(false)
   Solved            Solved[] //refers to many-to-many relation between user and problem
   SuggestedQuestion SuggestedQuestion[] //refers to one-to-many relation between problem and suggestedquestion
+  File              File[] //refers to one-to-many relation between problem and suggestedquestion
+
+}
+
+model File {
+  id                Int                 @id @default(autoincrement())
+  filename          String
+  path              String
+  mimetype           String
+  problem   Problem @relation(fields: [problemid], references: [id])
 }
 
 model Solved {
