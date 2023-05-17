@@ -7,11 +7,15 @@ import {
   NotFoundException,
   UploadedFile,
   UseInterceptors,
+  StreamableFile,
 } from '@nestjs/common';
 import { ProblemsService } from './problems.service';
 import { Problem } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { createReadStream } from 'fs';
+import { response } from 'express';
+import { join } from 'path';
 
 @Controller('problems')
 export class ProblemsController {
@@ -37,8 +41,8 @@ export class ProblemsController {
 
     return problems;
   }
-  // 지금 구현된건 이 api가 실행되면,  problem service에서 파일데이터를 file module을 통해 file디비에 저장을 하고, 그 id를 받아옴. 그걸로 problem 생성하거나 수정할 때 활용.
-  // 이걸 문제정보 생성할 때 복붙해서 쓰면 그 파일의 정보를 함께 저장할 수 있게 될 것.
+  // 지금 구현된건 이 api가 실행되면,  problem service에서 파일데이터를 file module을 통해 file디비에 저장을 하고, 그 id를 받아옴.
+  // 문제정보 생성할 때, 먼저 문제를 생성하고, 그 문제id를 받아서 파일의 정보를 함께 problemfile에 저장하면 됨.
   @Post('addFile')
   @UseInterceptors(
     FileInterceptor('file', {
@@ -47,10 +51,14 @@ export class ProblemsController {
       }),
     }),
   )
-  async addFile(@UploadedFile() file: Express.Multer.File) {
+  async addProblemFile(
+    @Param('problemid') problemid: number,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     const fileData = {
+      problemid: problemid,
       path: file.path,
-      filename: file.originalname,
+      problemfilename: file.originalname,
       mimetype: file.mimetype,
     };
     const uploadedfile = await this.problemsService.saveFileData(fileData);
@@ -58,5 +66,18 @@ export class ProblemsController {
     console.log(uploadedfile.id);
 
     //이제 받아온 파일id로 문제 생성하면 됨.
+  }
+
+  // 이건 나중에 파일id로 사진을 가져오는 것.
+  @Get(':id')
+  async getProblemFile(@Param('id') id: number) {
+    const dbfile = await this.problemsService.getFileBtId(id);
+    const stream = createReadStream(join(process.cwd(), dbfile.path));
+    response.set({
+      'Content-Disposition': `inline; filename="${dbfile.filename}"`,
+      'Content-Type': dbfile.mimetype,
+    });
+
+    return new StreamableFile(stream);
   }
 }

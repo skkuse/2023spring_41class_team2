@@ -33,12 +33,22 @@ export class ProblemsService {
   }
 
   async saveFileData(fileData: {
-    filename: string;
+    problemid: number;
     path: string;
+    problemfilename: string;
     mimetype: string;
   }) {
-    const newFileData = await this.prisma.file.create(fileData);
-    await this.prisma.file.save(fileData);
+    const newFileData = await this.prisma.problemFile.create({
+      data: fileData,
+    });
     return newFileData;
+  }
+
+  async getFileBtId(fileId: number): Promise<any> {
+    const dbfile = await this.prisma.problemFile.findUnique({
+      where: { id: fileId },
+    });
+    if (!dbfile) throw new NotFoundException('No file found');
+    return dbfile;
   }
 }
