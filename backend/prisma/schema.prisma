@@ -41,6 +41,7 @@ model Problem {
 
 model File {
   id                Int                 @id @default(autoincrement())
+  problemid         Int
   filename          String
   path              String
   mimetype           String
