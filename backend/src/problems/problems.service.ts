@@ -123,9 +123,6 @@ export class ProblemsService {
     if (!suggestedquestion || suggestedquestion.length === 0)
       throw new NotFoundException('No Suggested Question found');
 
-    console.log(suggestedquestion);
-    console.log(typeof suggestedquestion);
-
     return suggestedquestion;
   }
 
@@ -133,8 +130,6 @@ export class ProblemsService {
     createSuggestedQuestionDto: CreateSuggestedQuestionDto,
   ): Promise<SuggestedQuestion> {
     const { problemid, content, answer } = createSuggestedQuestionDto;
-
-    console.log('hello', problemid, content, answer);
 
     return await this.prisma.suggestedQuestion.create({
       data: {
@@ -174,9 +169,6 @@ export class ProblemsService {
         `In Body, Problem with ID ${createSuggestedQuestionDto.problemid} not found`,
       );
     }
-
-    console.log('123', createSuggestedQuestionDto);
-    console.log('123', createSuggestedQuestionDto.problemid);
 
     const post_suggestedquestion = await this.prisma.suggestedQuestion.update({
       where: {
