@@ -94,6 +94,11 @@ export class ProblemsController {
   async getSuggestedQuestion(
     @Query('problemId', ParseIntPipe) problemId: number,
   ): Promise<any> {
+    const problem = await this.problemsService.findProblemById(problemId);
+
+    if (!problem)
+      throw new NotFoundException(`Problem with ID ${problemId} not found`);
+
     const suggestedquestion = await this.problemsService.getSuggestedQuestion(
       problemId,
     );
@@ -112,5 +117,40 @@ export class ProblemsController {
     return await this.problemsService.createSuggestedQuestion(
       createSuggestedQuestionDto,
     );
+  }
+
+  @Patch('/suggested')
+  async updateSuggestedQuestion(
+    @Query('suggestedQuestionId', ParseIntPipe) suggestedQuestionId: number,
+    @Body() createSuggestedQuestionDto: CreateSuggestedQuestionDto,
+  ): Promise<SuggestedQuestion> {
+    const suggestedQuestion =
+      await this.problemsService.updateSuggestedQuestion(
+        suggestedQuestionId,
+        createSuggestedQuestionDto,
+      );
+
+    if (!suggestedQuestion)
+      throw new NotFoundException(
+        `Suggested Question with ID ${suggestedQuestionId} not found`,
+      );
+    return suggestedQuestion;
+  }
+
+  @Delete('/suggested')
+  async deleteSuggestedQuestionById(
+    @Query('suggestedQuestionId', ParseIntPipe) suggestedQuestionId: number,
+  ): Promise<SuggestedQuestion> {
+    const suggestedquestion =
+      await this.problemsService.deleteSuggestedQuestionById(
+        suggestedQuestionId,
+      );
+
+    if (!suggestedquestion)
+      throw new NotFoundException(
+        `Suggested Question with ID ${suggestedQuestionId} not found`,
+      );
+
+    return suggestedquestion;
   }
 }

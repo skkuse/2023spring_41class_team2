@@ -144,4 +144,71 @@ export class ProblemsService {
       },
     });
   }
+
+  async updateSuggestedQuestion(
+    suggestedQuestionId: number,
+    createSuggestedQuestionDto: CreateSuggestedQuestionDto,
+  ): Promise<SuggestedQuestion> {
+    const pre_suggestedquestion =
+      await this.prisma.suggestedQuestion.findUnique({
+        where: {
+          id: suggestedQuestionId,
+        },
+      });
+
+    if (!pre_suggestedquestion) {
+      throw new NotFoundException(
+        `Suggested Question with ID ${suggestedQuestionId} not found`,
+      );
+    }
+
+    // Check whether the problemid is in the problem table or not
+    const problem = await this.prisma.problem.findUnique({
+      where: {
+        id: createSuggestedQuestionDto.problemid,
+      },
+    });
+
+    if (!problem) {
+      throw new NotFoundException(
+        `In Body, Problem with ID ${createSuggestedQuestionDto.problemid} not found`,
+      );
+    }
+
+    console.log('123', createSuggestedQuestionDto);
+    console.log('123', createSuggestedQuestionDto.problemid);
+
+    const post_suggestedquestion = await this.prisma.suggestedQuestion.update({
+      where: {
+        id: suggestedQuestionId,
+      },
+      data: createSuggestedQuestionDto,
+    });
+
+    return post_suggestedquestion;
+  }
+
+  async deleteSuggestedQuestionById(
+    suggestedQuestionId: number,
+  ): Promise<SuggestedQuestion> {
+    const suggestedquestion = await this.prisma.suggestedQuestion.findUnique({
+      where: {
+        id: suggestedQuestionId,
+      },
+    });
+
+    if (!suggestedquestion) {
+      throw new NotFoundException(
+        `Suggested Question with ID ${suggestedquestion} not found`,
+      );
+    }
+
+    await this.prisma.suggestedQuestion.delete({
+      where: {
+        id: suggestedQuestionId,
+      },
+    });
+
+    return suggestedquestion;
+  }
 }
