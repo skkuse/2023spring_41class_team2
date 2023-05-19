@@ -1,10 +1,18 @@
-import { Controller, Request, Get, Post, UseGuards, Body, Res, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Post,
+  Get,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+  Body,
+  Res,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
-import { User } from '@prisma/client';
 import { AuthGuard } from './guard/auth.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { SignupResponseUserDto } from 'src/users/dto/signup-response-user.dto';
 import { AdminGuard } from './guard/admin.guard';
 
 
@@ -20,15 +28,19 @@ export class AuthController {
   ): Promise<any> {
     const jwt = await this.authService.validateUser(userid, password);
     res.setHeader('Authorization', 'Bearer ' + jwt.accessToken);
-    res.cookie('jwt', jwt.accessToken, { httpOnly: true, secure: false, maxAge: 3600000 });
+    res.cookie('jwt', jwt.accessToken, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 3600000,
+    });
 
-    return res.send({message:'login success'});
+    return res.send({ message: 'login success' });
   }
 
   @Post('logout')
-  async logout(@Request() req, @Res() res: Response){
-    res.cookie('jwt', "", {maxAge: 0});
-    return res.send({message:'logout success'});
+  async logout(@Request() req, @Res() res: Response) {
+    res.cookie('jwt', '', { maxAge: 0 });
+    return res.send({ message: 'logout success' });
   }
 
   @UsePipes(ValidationPipe)
@@ -42,6 +54,5 @@ export class AuthController {
   async authenticate(@Request() req): Promise<any> {
     const user: any = req.user;
     return user;
-
   }
 }

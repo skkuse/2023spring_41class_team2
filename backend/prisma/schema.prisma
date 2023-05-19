@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
@@ -20,32 +17,31 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isAdmin   Boolean  @default(false)
-  isBanned  Boolean  @default(false)
   credit    Int      @default(0)
-  Solved    Solved[] //refers to many-to-many relation between user and problem
+  isBanned  Boolean  @default(false)
+  Solved    Solved[]
 }
 
 model Problem {
   id                Int                 @id @default(autoincrement())
   title             String
-  content           String? //? refers to optional
+  content           String?
   answer            String
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
-  hidden            Boolean             @default(false)
-  Solved            Solved[] //refers to many-to-many relation between user and problem
-  SuggestedQuestion SuggestedQuestion[] //refers to one-to-many relation between problem and suggestedquestion
+  isHidden          Boolean             @default(false)
+  Solved            Solved[]
+  SuggestedQuestion SuggestedQuestion[]
   ProblemFile       ProblemFile[] //refers to one-to-many relation between problem and suggestedquestion
-
 }
 
 model ProblemFile {
-  id                Int                 @id @default(autoincrement())
-  problemid         Int
-  problemfilename   String
-  path              String
-  mimetype          String
-  problem   Problem @relation(fields: [problemid], references: [id])
+  id              Int     @id @default(autoincrement())
+  problemid       Int
+  problemfilename String
+  path            String
+  mimetype        String
+  problem         Problem @relation(fields: [problemid], references: [id])
 }
 
 model Solved {
@@ -53,9 +49,12 @@ model Solved {
   userid    String
   problemid Int
   status    Int       @default(0)
-  user      User      @relation(fields: [userid], references: [userid])
+  Chatlog   Chatlog[]
   problem   Problem   @relation(fields: [problemid], references: [id])
-  Chatlog   Chatlog[] //refers to one-to-many relation between solved and chatlog
+  user      User      @relation(fields: [userid], references: [userid])
+
+  @@index([problemid], map: "Solved_problemid_fkey")
+  @@index([userid], map: "Solved_userid_fkey")
 }
 
 model SuggestedQuestion {
@@ -64,6 +63,8 @@ model SuggestedQuestion {
   content   String
   answer    String?
   problem   Problem @relation(fields: [problemid], references: [id])
+
+  @@index([problemid], map: "SuggestedQuestion_problemid_fkey")
 }
 
 model Chatlog {
@@ -72,4 +73,6 @@ model Chatlog {
   createdAt DateTime @default(now())
   content   String
   solved    Solved   @relation(fields: [solvedid], references: [id])
+
+  @@index([solvedid], map: "Chatlog_solvedid_fkey")
 }
