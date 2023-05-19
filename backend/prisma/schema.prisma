@@ -8,18 +8,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Status {
+  Solved
+  Wrong
+}
+
+enum Speaker {
+  User
+  Chatbot
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
-  userid    String   @unique
-  password  String
-  nickname  String   @unique
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isAdmin   Boolean  @default(false)
-  credit    Int      @default(0)
-  isBanned  Boolean  @default(false)
-  Solved    Solved[] //refers to many-to-many relation between user and problem
+  id         Int       @id @default(autoincrement())
+  userid     String    @unique
+  password   String
+  nickname   String    @unique
+  email      String    @unique
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  unbannedAt DateTime?
+  isAdmin    Boolean   @default(false)
+  isBanned   Boolean   @default(false)
+  Solved     Solved[] //refers to many-to-many relation between user and problem
 }
 
 model Problem {
@@ -48,7 +58,7 @@ model Solved {
   id        Int       @id @default(autoincrement())
   userid    String
   problemid Int
-  status    Int       @default(0)
+  status    Status?
   Chatlog   Chatlog[]
   problem   Problem   @relation(fields: [problemid], references: [id])
   user      User      @relation(fields: [userid], references: [userid])
@@ -67,6 +77,7 @@ model SuggestedQuestion {
 model Chatlog {
   id        Int      @id @default(autoincrement())
   solvedid  Int
+  speaker   Speaker
   createdAt DateTime @default(now())
   content   String
   solved    Solved   @relation(fields: [solvedid], references: [id])
