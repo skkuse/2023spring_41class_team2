@@ -9,7 +9,12 @@ export class ProblemsService {
   constructor(private prisma: PrismaService) {}
 
   async getAllProblems(): Promise<any> {
-    const problems = await this.prisma.problem.findMany({});
+    const problems = await this.prisma.problem.findMany({
+      select: {
+        id: true,
+        title: true,
+      },
+    });
 
     if (!problems || problems.length === 0)
       throw new NotFoundException('No problems found');
