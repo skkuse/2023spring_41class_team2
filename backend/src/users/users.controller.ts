@@ -8,39 +8,50 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from '@prisma/client';
-import { CreateUserDto } from './dto/create-user.dto';
+import { Speaker, User } from '@prisma/client';
 import { AdminGuard } from 'src/auth/guard/admin.guard';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
-  findAllUsers(): Promise<User[]> {
-    return this.usersService.findAllUsers();
+  @Get('leaderboard')
+  getLeaderboard(): Promise<any> {
+    return this.usersService.getLeaderboard();
   }
 
-  @Post()
-  createUser(@Body() userData: CreateUserDto): Promise<any> {
-    return this.usersService.createUser(userData);
-  }
-
+  //Nest는 내부적으로 async/await를 사용해서 명시적으로 async를 쓰지 않아도 됨
+  //하지만 이 API에서 async를 사용하지 않으면 password를 빼지 못함
   @Get(':userId')
-  findUserById(@Param('userId') userId: string): Promise<User> {
-    return this.usersService.findUserById(userId);
+  async findUserById(@Param('userId') userId: string): Promise<any> {
+    const foundUser = await this.usersService.findUserById(userId);
+    const { password, ...result } = foundUser;
+    return result;
   }
 
-  //유저 밴
-  @UseGuards(AdminGuard)
+  //Nest는 내부적으로 async/await를 사용해서 명시적으로 async를 쓰지 않아도 됨
+  //하지만 이 API에서 async를 사용하지 않으면 password를 빼지 못함
   @Patch(':userId')
-  banUser(@Param('userId') userId: string): Promise<any> {
-    return this.usersService.banUser(userId);
+  async updateUser(
+    @Param('userId') userId: string,
+    @Body() data: UpdateUserDto,
+  ): Promise<any> {
+    const updatedUser = await this.usersService.updateUser(userId, data);
+    const { password, ...result } = updatedUser;
+    return result;
   }
 
-  // 유저 정지 기능 삭제 고민중
-  // 기능 구현 시 suspend_date 추가해서 db 수정 필요
-  // 이 기능을 구현하면 밴 기능 지워도됨
+  //유저 밴 및 일시 정지, unbannedAt로 결정
+  @UseGuards(AdminGuard)
+  @Patch(':userId/ban')
+  banUser(
+    @Param('userId') userId: string,
+    @Body('isBanned') isBanned: boolean,
+    @Body('unbannedAt') unbannedDate: string,
+  ): Promise<any> {
+    return this.usersService.banUser(userId, isBanned, unbannedDate);
+  }
 
   //유저가 풀어본 문제들
   @Get(':userId/solved')
@@ -48,24 +59,18 @@ export class UsersController {
     return this.usersService.getAllSolvedProblems(userId);
   }
 
-  //유저의 해당 문제 풀이 상태 갱신
-  @Patch(':userId/solved/:problemId')
-  updateSolvedStatus(
-    @Param('userId') userId: string,
-    @Param('problemId') problemId: string,
-    @Body() data: any,
-  ): Promise<any> {
-    return this.usersService.updateSolvedStatus(userId, problemId, data);
-  }
-
-  //문제 제출
+  //문제 제출 (prisma upsert 사용)
   @Post(':userId/solved/:problemId')
-  createProblemStatus(
+  submitProblem(
     @Param('userId') userId: string,
     @Param('problemId') problemId: string,
-    @Body() data: any,
+    @Body('submittedValue') submittedValue: string,
   ): Promise<any> {
-    return this.usersService.createProblemStatus(userId, problemId, data);
+    return this.usersService.createProblemStatus(
+      userId,
+      problemId,
+      submittedValue,
+    );
   }
 
   //유저가 푼 문제의 채팅 로그
@@ -77,14 +82,13 @@ export class UsersController {
     return this.usersService.getChatLog(userId, problemId);
   }
 
-  //채팅 로그 추가
-  // 발언자가 누군지 추가하는 db 수정 필요
   @Post(':userId/solved/:problemId/chat')
   createChatLog(
     @Param('userId') userId: string,
     @Param('problemId') problemId: string,
-    @Body() data: any,
+    @Body('speaker') speaker: Speaker,
+    @Body('content') content: string,
   ): Promise<any> {
-    return this.usersService.createChatLog(userId, problemId, data);
+    return this.usersService.createChatLog(userId, problemId, speaker, content);
   }
 }
