@@ -16,12 +16,10 @@ const LoginPage: React.FC = () => {
                 <h1 style={{ fontWeight: 'bold', fontFamily: 'Arial, sans-serif', display: 'inline' }}>Log in</h1>
               </div>
               <div className="text-center mt-5">
-                <Button variant="secondary" style={{ width: '100%', minWidth: '100px', marginBottom:'10px' }}>Change Username</Button>
-                <Button variant="secondary" style={{ width: '100%', minWidth: '100px', marginBottom:'10px' }}>Change password</Button>
-                <Button variant="secondary" style={{ width: '100%', minWidth: '100px', marginBottom:'10px' }}>My credit</Button>
-                <Button variant="secondary" style={{ width: '100%', minWidth: '100px', marginBottom:'40px' }}>My Ranking</Button>
-
-                <Button variant="danger" style={{ width: '100%', minWidth: '400px', marginBottom:'100px'}}>Delete My Account</Button>
+                <Form.Control type="id" style={{ width: '100%', minWidth: '100px', marginBottom:'10px' }} placeholder="ID"></Form.Control> 
+                <Form.Control type="password" style={{ width: '100%', minWidth: '100px', marginBottom:'10px' }} placeholder="Password"></Form.Control> 
+                <Button variant="secondary" style={{ width: '100%', minWidth: '400px', marginBottom:'10px'}}>Log in</Button>
+                <Button variant="secondary" style={{ width: '100%', minWidth: '400px', marginBottom:'10px'}} type="submit">Sign up</Button>
               </div>
             </Card>
             
@@ -32,4 +30,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default MyPage;
+export default LoginPage;
