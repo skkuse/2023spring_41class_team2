@@ -19,7 +19,6 @@ import { createReadStream } from 'fs';
 import { response } from 'express';
 import { join } from 'path';
 import { CreateProblemDto } from './dto/create-problem.dto';
-import { CreateSuggestedQuestionDto } from './dto/create-suggested-question.dto';
 
 @Controller('problems')
 export class ProblemsController {
@@ -65,6 +64,7 @@ export class ProblemsController {
   getSuggestedQuestion(@Param('problemId') problemId: string): Promise<any> {
     return this.problemsService.getAllQuestions(problemId);
   }
+
   // 지금 구현된건 이 api가 실행되면,  problem service에서 파일데이터를 file module을 통해 file디비에 저장을 하고, 그 id를 받아옴.
   // 문제정보 생성할 때, 먼저 문제를 생성하고, 그 문제id를 받아서 파일의 정보를 함께 problemfile에 저장하면 됨.
   @Post('addFile')
@@ -89,49 +89,6 @@ export class ProblemsController {
     if (!uploadedfile) throw new NotFoundException('No file uploaded');
     console.log(uploadedfile.id);
   }
-
-  @Post(':problemId/questions')
-  createSuggestedQuestion(
-    @Body() createSuggestedQuestionDto: CreateSuggestedQuestionDto,
-  ): Promise<SuggestedQuestion> {
-    return this.problemsService.createQuestion(createSuggestedQuestionDto);
-  }
-
-  @Patch(':problemId/questions/:questionId')
-  updateSuggestedQuestion(
-    @Param('questionId') suggestedQuestionId: number,
-    @Body() createSuggestedQuestionDto: CreateSuggestedQuestionDto,
-  ): Promise<SuggestedQuestion> {
-    const suggestedQuestion = this.problemsService.updateQuestion(
-      suggestedQuestionId,
-      createSuggestedQuestionDto,
-    );
-
-    return suggestedQuestion;
-  }
-  // 지금 구현된건 이 api가 실행되면,  problem service에서 파일데이터를 file module을 통해 file디비에 저장을 하고, 그 id를 받아옴.
-  // 문제정보 생성할 때, 먼저 문제를 생성하고, 그 문제id를 받아서 파일의 정보를 함께 problemfile에 저장하면 됨.
-  @Post('addFile')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './uploadedFiles',
-      }),
-    }),
-  )
-  async addProblemFile(
-    @Param('problemid') problemid: number,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    const fileData = {
-      problemid: problemid,
-      path: file.path,
-      problemfilename: file.originalname,
-      mimetype: file.mimetype,
-    };
-    const uploadedfile = await this.problemsService.saveFileData(fileData);
-    if (!uploadedfile) throw new NotFoundException('No file uploaded');
-    console.log(uploadedfile.id);
 
   @Delete(':problemId/questions/:questionId')
   deleteSuggestedQuestionById(
