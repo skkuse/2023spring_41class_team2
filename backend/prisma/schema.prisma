@@ -34,7 +34,7 @@ model User {
 
 model Problem {
   id                Int                 @id @default(autoincrement())
-  title             String
+  title             String              @unique
   content           String?
   answer            String
   createdAt         DateTime            @default(now())
@@ -48,8 +48,8 @@ model Problem {
 model ProblemFile {
   id              Int     @id @default(autoincrement())
   problemid       Int
-  problemfilename String
-  path            String
+  problemfilename String @unique
+  path            String @unique
   mimetype        String
   problem         Problem @relation(fields: [problemid], references: [id])
 }
