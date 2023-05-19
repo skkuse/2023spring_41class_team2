@@ -1,6 +1,6 @@
 export class SignupResponseUserDto {
-    id: number;
-    userid: string;
-    nickname: string;
-    email: string;
+  id: number;
+  userid: string;
+  nickname: string;
+  email: string;
 }
