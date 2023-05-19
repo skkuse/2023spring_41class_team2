@@ -19,7 +19,7 @@ export class AuthService {
     if (!user || !match) {
       throw new UnauthorizedException();
     }
-    const payload = { userid: user.userid };
+    const payload = { userid: user.userid, isAdmin: user.isAdmin };
 
     const result = {
       accessToken: this.jwtService.sign(payload),
@@ -50,5 +50,9 @@ export class AuthService {
     const { password, ...result } = createdUser;
 
     return result as SignupResponseUserDto;
+  }
+
+  async tokenValidate(payload: any): Promise<any> {
+    return await this.usersService.findUserById(payload.userid);
   }
 }
