@@ -15,7 +15,6 @@ import { AuthGuard } from './guard/auth.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AdminGuard } from './guard/admin.guard';
 
-
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

@@ -19,7 +19,7 @@ model User {
   isAdmin   Boolean  @default(false)
   credit    Int      @default(0)
   isBanned  Boolean  @default(false)
-  Solved    Solved[]
+  Solved    Solved[] //refers to many-to-many relation between user and problem
 }
 
 model Problem {
@@ -30,8 +30,8 @@ model Problem {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   isHidden          Boolean             @default(false)
-  Solved            Solved[]
-  SuggestedQuestion SuggestedQuestion[]
+  Solved            Solved[] //refers to many-to-many relation between user and problem
+  SuggestedQuestion SuggestedQuestion[] //refers to one-to-many relation between problem and suggestedquestion
   ProblemFile       ProblemFile[] //refers to one-to-many relation between problem and suggestedquestion
 }
 
@@ -53,8 +53,7 @@ model Solved {
   problem   Problem   @relation(fields: [problemid], references: [id])
   user      User      @relation(fields: [userid], references: [userid])
 
-  @@index([problemid], map: "Solved_problemid_fkey")
-  @@index([userid], map: "Solved_userid_fkey")
+  @@unique([userid, problemid])
 }
 
 model SuggestedQuestion {
@@ -63,8 +62,6 @@ model SuggestedQuestion {
   content   String
   answer    String?
   problem   Problem @relation(fields: [problemid], references: [id])
-
-  @@index([problemid], map: "SuggestedQuestion_problemid_fkey")
 }
 
 model Chatlog {
@@ -73,6 +70,4 @@ model Chatlog {
   createdAt DateTime @default(now())
   content   String
   solved    Solved   @relation(fields: [solvedid], references: [id])
-
-  @@index([solvedid], map: "Chatlog_solvedid_fkey")
 }
