@@ -109,6 +109,29 @@ export class ProblemsController {
 
     return suggestedQuestion;
   }
+  // 지금 구현된건 이 api가 실행되면,  problem service에서 파일데이터를 file module을 통해 file디비에 저장을 하고, 그 id를 받아옴.
+  // 문제정보 생성할 때, 먼저 문제를 생성하고, 그 문제id를 받아서 파일의 정보를 함께 problemfile에 저장하면 됨.
+  @Post('addFile')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploadedFiles',
+      }),
+    }),
+  )
+  async addProblemFile(
+    @Param('problemid') problemid: number,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const fileData = {
+      problemid: problemid,
+      path: file.path,
+      problemfilename: file.originalname,
+      mimetype: file.mimetype,
+    };
+    const uploadedfile = await this.problemsService.saveFileData(fileData);
+    if (!uploadedfile) throw new NotFoundException('No file uploaded');
+    console.log(uploadedfile.id);
 
   @Delete(':problemId/questions/:questionId')
   deleteSuggestedQuestionById(
