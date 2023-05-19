@@ -9,22 +9,17 @@ export class ProblemsService {
   constructor(private prisma: PrismaService) {}
 
   async getAllProblems(): Promise<any> {
-    const problems = await this.prisma.problem.findMany({
-      select: {
-        id: true,
-        title: true,
-      },
-    });
+    const problems = await this.prisma.problem.findMany({});
 
     if (!problems || problems.length === 0)
       throw new NotFoundException('No problems found');
     return problems;
   }
 
-  async findProblemById(problemId: number): Promise<Problem> {
+  async findProblemById(problemId: string): Promise<Problem> {
     const problem = await this.prisma.problem.findUnique({
       where: {
-        id: problemId,
+        id: parseInt(problemId),
       },
     });
 
@@ -35,8 +30,8 @@ export class ProblemsService {
     return problem;
   }
 
-  async createProblem(createProblemDto: CreateProblemDto): Promise<Problem> {
-    const { title, content, answer } = createProblemDto;
+  async createProblem(problemData: CreateProblemDto): Promise<Problem> {
+    const { title, content, answer } = problemData;
     return await this.prisma.problem.create({
       data: {
         title: title,
@@ -50,11 +45,11 @@ export class ProblemsService {
     return await this.prisma.problem.deleteMany({});
   }
 
-  async deleteProblemById(problemId: number): Promise<Problem> {
+  async deleteProblemById(problemId: string): Promise<Problem> {
     // for return message, not using findProblemById() function
     const problem = await this.prisma.problem.findUnique({
       where: {
-        id: problemId,
+        id: parseInt(problemId),
       },
     });
 
@@ -64,94 +59,75 @@ export class ProblemsService {
 
     await this.prisma.problem.delete({
       where: {
-        id: problemId,
+        id: parseInt(problemId),
       },
     });
 
     return problem;
   }
 
-  async hiddenToggle(problemId: number): Promise<Problem> {
-    this.findProblemById(problemId);
+  async updateProblem(problemId: string, data: Problem): Promise<Problem> {
     const problem = await this.prisma.problem.findUnique({
       where: {
-        id: problemId,
+        id: parseInt(problemId),
       },
     });
 
-    problem.hidden = problem.hidden ? false : true;
-
-    await this.prisma.problem.update({
-      where: { id: problemId },
-      data: problem,
-    });
-
-    return problem;
-  }
-
-  async updateProblem(
-    problemId: number,
-    createProblemDto: CreateProblemDto,
-  ): Promise<Problem> {
-    const pre_problem = await this.prisma.problem.findUnique({
-      where: {
-        id: problemId,
-      },
-    });
-
-    if (!pre_problem) {
+    if (!problem) {
       throw new NotFoundException(`Problem with ID ${problemId} not found`);
     }
 
-    const post_problem = await this.prisma.problem.update({
+    const updatedProblem = await this.prisma.problem.update({
       where: {
-        id: problemId,
+        id: parseInt(problemId),
       },
-      data: createProblemDto,
+      data: data,
     });
 
-    return post_problem;
+    return updatedProblem;
   }
 
-  async getSuggestedQuestion(problemId: number): Promise<any> {
-    const suggestedquestion = await this.prisma.suggestedQuestion.findMany({
+  async getAllQuestions(problemId: string): Promise<any> {
+    const questions = await this.prisma.suggestedQuestion.findMany({
       where: {
-        problemid: problemId,
+        problemid: parseInt(problemId),
       },
     });
 
-    if (!suggestedquestion || suggestedquestion.length === 0)
-      throw new NotFoundException('No Suggested Question found');
+    if (!questions || questions.length === 0)
+      throw new NotFoundException('No Questions found');
 
-    return suggestedquestion;
+    return questions;
   }
 
-  async createSuggestedQuestion(
+  async createQuestion(
     createSuggestedQuestionDto: CreateSuggestedQuestionDto,
   ): Promise<SuggestedQuestion> {
-    const { problemid, content, answer } = createSuggestedQuestionDto;
+    const { problemId, content } = createSuggestedQuestionDto;
 
     return await this.prisma.suggestedQuestion.create({
       data: {
-        problemid: problemid,
         content: content,
-        answer: answer,
+        problem: {
+          connect: {
+            id: problemId,
+          },
+        },
       },
     });
   }
 
-  async updateSuggestedQuestion(
+  async updateQuestion(
     suggestedQuestionId: number,
     createSuggestedQuestionDto: CreateSuggestedQuestionDto,
   ): Promise<SuggestedQuestion> {
-    const pre_suggestedquestion =
-      await this.prisma.suggestedQuestion.findUnique({
-        where: {
-          id: suggestedQuestionId,
-        },
-      });
+    const question = await this.prisma.suggestedQuestion.findUnique({
+      where: {
+        id: suggestedQuestionId,
+      },
+    });
 
-    if (!pre_suggestedquestion) {
+    if (!question) {
       throw new NotFoundException(
         `Suggested Question with ID ${suggestedQuestionId} not found`,
       );
@@ -160,38 +136,38 @@ export class ProblemsService {
     // Check whether the problemid is in the problem table or not
     const problem = await this.prisma.problem.findUnique({
       where: {
-        id: createSuggestedQuestionDto.problemid,
+        id: createSuggestedQuestionDto.problemId,
       },
     });
 
     if (!problem) {
       throw new NotFoundException(
-        `In Body, Problem with ID ${createSuggestedQuestionDto.problemid} not found`,
+        `In Body, Problem with ID ${createSuggestedQuestionDto.problemId} not found`,
       );
     }
 
-    const post_suggestedquestion = await this.prisma.suggestedQuestion.update({
+    const updatedQuestion = await this.prisma.suggestedQuestion.update({
       where: {
         id: suggestedQuestionId,
       },
       data: createSuggestedQuestionDto,
     });
 
-    return post_suggestedquestion;
+    return updatedQuestion;
   }
 
   async deleteSuggestedQuestionById(
     suggestedQuestionId: number,
   ): Promise<SuggestedQuestion> {
-    const suggestedquestion = await this.prisma.suggestedQuestion.findUnique({
+    const question = await this.prisma.suggestedQuestion.findUnique({
       where: {
         id: suggestedQuestionId,
       },
     });
 
-    if (!suggestedquestion) {
+    if (!question) {
       throw new NotFoundException(
-        `Suggested Question with ID ${suggestedquestion} not found`,
+        `Suggested Question with ID ${question} not found`,
       );
     }
 
@@ -201,6 +177,6 @@ export class ProblemsService {
       },
     });
 
-    return suggestedquestion;
+    return question;
   }
 }

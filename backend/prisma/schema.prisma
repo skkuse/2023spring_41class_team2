@@ -29,7 +29,7 @@ model Problem {
   answer            String
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
-  hidden            Boolean             @default(false)
+  isHidden          Boolean             @default(false)
   Solved            Solved[]
   SuggestedQuestion SuggestedQuestion[]
 }

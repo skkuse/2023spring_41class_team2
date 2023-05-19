@@ -1,155 +1,88 @@
 import {
   Controller,
   Get,
-  NotFoundException,
-  Query,
-  ParseIntPipe,
   Post,
   Patch,
-  UsePipes,
-  ValidationPipe,
   Body,
   Delete,
+  Param,
 } from '@nestjs/common';
 import { ProblemsService } from './problems.service';
 import { Problem, SuggestedQuestion } from '@prisma/client';
 import { CreateProblemDto } from './dto/create-problem.dto';
 import { CreateSuggestedQuestionDto } from './dto/create-suggested-question.dto';
 
-@Controller('problem')
+@Controller('problems')
 export class ProblemsController {
   constructor(private readonly problemsService: ProblemsService) {}
 
-  @Get('/all')
-  async getAllProblems(): Promise<{ id: number; title: string }[]> {
-    const problems = await this.problemsService.getAllProblems();
-    if (!problems || problems.length === 0)
-      throw new NotFoundException('No Problems Found');
-
-    return problems;
+  @Get()
+  getAllProblems(): Promise<{ id: number; title: string }[]> {
+    return this.problemsService.getAllProblems();
   }
 
-  @Get('/')
-  async getProblemById(
-    @Query('problemId', ParseIntPipe) problemId: number,
-  ): Promise<Problem> {
-    const problem = await this.problemsService.findProblemById(problemId);
+  @Post()
+  createProblem(@Body() problemData: CreateProblemDto): Promise<Problem> {
+    return this.problemsService.createProblem(problemData);
+  }
 
-    if (!problem)
-      throw new NotFoundException(`Problem with ID ${problemId} not found`);
+  //디버그용
+  @Delete()
+  deleteAllProblem(): Promise<void> {
+    return this.problemsService.deleteAllProblem();
+  }
+
+  @Get(':problemId')
+  findProblemById(@Param('problemId') problemId: string): Promise<Problem> {
+    return this.problemsService.findProblemById(problemId);
+  }
+
+  @Delete(':problemId')
+  deleteProblemById(@Param('problemId') problemId: string): Promise<Problem> {
+    return this.problemsService.deleteProblemById(problemId);
+  }
+
+  @Patch(':problemId')
+  updateProblem(
+    @Param('problemId') problemId: string,
+    @Body() data: Problem,
+  ): Promise<Problem> {
+    const problem = this.problemsService.updateProblem(problemId, data);
+
     return problem;
   }
 
-  @Post('/')
-  @UsePipes(ValidationPipe)
-  async createProblem(
-    @Body() createProblemDto: CreateProblemDto,
-  ): Promise<Problem> {
-    return await this.problemsService.createProblem(createProblemDto);
+  @Get(':problemId/questions')
+  getSuggestedQuestion(@Param('problemId') problemId: string): Promise<any> {
+    return this.problemsService.getAllQuestions(problemId);
   }
 
-  @Delete('/all')
-  async deleteAllProblem(): Promise<void> {
-    return await this.problemsService.deleteAllProblem();
-  }
-
-  @Delete('/')
-  async deleteProblemById(
-    @Query('problemId', ParseIntPipe) problemId: number,
-  ): Promise<Problem> {
-    const problem = await this.problemsService.deleteProblemById(problemId);
-
-    if (!problem)
-      throw new NotFoundException(`Problem with ID ${problemId} not found`);
-    return problem;
-  }
-
-  @Patch('/hidden')
-  async hiddenToggle(
-    @Query('problemId', ParseIntPipe) problemId: number,
-  ): Promise<Problem> {
-    const problem = await this.problemsService.hiddenToggle(problemId);
-
-    if (!problem)
-      throw new NotFoundException(`Problem with ID ${problemId} not found`);
-    return problem;
-  }
-
-  @Patch('/')
-  async updateProblem(
-    @Query('problemId', ParseIntPipe) problemId: number,
-    @Body() createProblemDto: CreateProblemDto,
-  ): Promise<Problem> {
-    const problem = await this.problemsService.updateProblem(
-      problemId,
-      createProblemDto,
-    );
-
-    if (!problem)
-      throw new NotFoundException(`Problem with ID ${problemId} not found`);
-    return problem;
-  }
-
-  @Get('/suggested')
-  async getSuggestedQuestion(
-    @Query('problemId', ParseIntPipe) problemId: number,
-  ): Promise<any> {
-    const problem = await this.problemsService.findProblemById(problemId);
-
-    if (!problem)
-      throw new NotFoundException(`Problem with ID ${problemId} not found`);
-
-    const suggestedquestion = await this.problemsService.getSuggestedQuestion(
-      problemId,
-    );
-
-    if (!suggestedquestion || suggestedquestion.length === 0)
-      throw new NotFoundException('No Suggested Question Found');
-
-    return suggestedquestion;
-  }
-
-  @Post('/suggested')
-  @UsePipes(ValidationPipe)
-  async createSuggestedQuestion(
+  @Post(':problemId/questions')
+  createSuggestedQuestion(
     @Body() createSuggestedQuestionDto: CreateSuggestedQuestionDto,
   ): Promise<SuggestedQuestion> {
-    return await this.problemsService.createSuggestedQuestion(
+    return this.problemsService.createQuestion(createSuggestedQuestionDto);
+  }
+
+  @Patch(':problemId/questions/:questionId')
+  updateSuggestedQuestion(
+    @Param('questionId') suggestedQuestionId: number,
+    @Body() createSuggestedQuestionDto: CreateSuggestedQuestionDto,
+  ): Promise<SuggestedQuestion> {
+    const suggestedQuestion = this.problemsService.updateQuestion(
+      suggestedQuestionId,
       createSuggestedQuestionDto,
     );
-  }
 
-  @Patch('/suggested')
-  async updateSuggestedQuestion(
-    @Query('suggestedQuestionId', ParseIntPipe) suggestedQuestionId: number,
-    @Body() createSuggestedQuestionDto: CreateSuggestedQuestionDto,
-  ): Promise<SuggestedQuestion> {
-    const suggestedQuestion =
-      await this.problemsService.updateSuggestedQuestion(
-        suggestedQuestionId,
-        createSuggestedQuestionDto,
-      );
-
-    if (!suggestedQuestion)
-      throw new NotFoundException(
-        `Suggested Question with ID ${suggestedQuestionId} not found`,
-      );
     return suggestedQuestion;
   }
 
-  @Delete('/suggested')
-  async deleteSuggestedQuestionById(
-    @Query('suggestedQuestionId', ParseIntPipe) suggestedQuestionId: number,
+  @Delete(':problemId/questions/:questionId')
+  deleteSuggestedQuestionById(
+    @Param('questionId') suggestedQuestionId: number,
   ): Promise<SuggestedQuestion> {
     const suggestedquestion =
-      await this.problemsService.deleteSuggestedQuestionById(
-        suggestedQuestionId,
-      );
-
-    if (!suggestedquestion)
-      throw new NotFoundException(
-        `Suggested Question with ID ${suggestedQuestionId} not found`,
-      );
+      this.problemsService.deleteSuggestedQuestionById(suggestedQuestionId);
 
     return suggestedquestion;
   }
