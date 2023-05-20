@@ -4,8 +4,8 @@ import Mypage from './components/MyPage'
 import Admin from './components/Admin'
 import ManageUser from './components/ManageUser'
 import ManageProblem from './components/ManageProblem'
-import LoginPage from './components/LoginPage'
 import SignupPage from './components/SignupPage'
+import ProblemPage from './components/ProblemPage'
 import { Counter } from './features/counter/Counter';
 import './App.css';
 
@@ -15,7 +15,8 @@ const App: React.FC = () => {
   //return <ManageProblem/>;
   //return <Admin />;
   // return <LoginPage/>;
-  return <SignupPage/>;
+  // return <SignupPage/>;
+  return <ProblemPage/>
 };
 
 export default App;
