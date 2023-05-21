@@ -12,6 +12,7 @@
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.11",
     "@types/react-redux": "^7.1.25",
+    "@uiw/react-textarea-code-editor": "^2.1.1",
     "bootstrap": "^5.2.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",

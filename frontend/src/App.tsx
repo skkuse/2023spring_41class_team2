@@ -17,8 +17,8 @@ const App: React.FC = () => {
   //return <Admin />;
   //return <LoginPage/>;
   //return <SignupPage/>;
-  //return <ProblemPage/>;
-  return <MainPage/>;
+  return <ProblemPage/>;
+  // return <MainPage/>;
 };
 
 export default App;
