@@ -20,7 +20,7 @@ const ProblemPage: React.FC = () => {
                   <CodeEditor
                       value='function add(a, b) {\n  return a + b;\n}'
                       language="c"
-                      placeholder="Placeholder Text"
+                      placeholder="Type"
                       padding={15}
                       style={{
                         fontSize: 14,
@@ -28,9 +28,12 @@ const ProblemPage: React.FC = () => {
                         fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
                       }}
                     />
+                    <Form.Check inline label="Ans1" name="group1" type="radio" id={'inline-1'}></Form.Check>
+                    <Form.Check inline label="Ans2" name="group1" type="radio" id={'inline-2'}></Form.Check>
+                    <Button variant="secondary" style={{ width: '100%', minWidth: '50px', marginBottom:'10px'}}>Submit</Button>
                 </Col>
                 <Col xs={4} className="mt-4">
-                  <div className="overflow-auto">
+                  <div overflow-y="auto">
                     <div className="d-flex flex-row justify-content-end">
                       <div>
                         <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
@@ -130,6 +133,14 @@ const ProblemPage: React.FC = () => {
                         </p>
                       </div>
                     </div>
+                  </div>
+                  <div>
+                    <Col xs={8} className="mt-4">
+                      <Form.Control type="text" style={{ width: '100%', minWidth: '100px', marginBottom:'10px' }} placeholder="Type your question"></Form.Control> 
+                    </Col>
+                    <Col xs={4} className="mt-4">
+                      <Button variant="secondary" style={{ width: '100%', minWidth: '50px', marginBottom:'10px'}}>Ask</Button>
+                    </Col>
                   </div>
                 </Col>
               </Row>
