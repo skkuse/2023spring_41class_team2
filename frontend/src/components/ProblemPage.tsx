@@ -41,8 +41,10 @@ int main()
                         fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
                       }}
                     />
-                    <Form.Check inline label="Ans1" name="group1" type="radio" id={'inline-1'}></Form.Check>
-                    <Form.Check inline label="Ans2" name="group1" type="radio" id={'inline-2'}></Form.Check>
+                    <Form.Check inline label="1) line 13 : Integer Overflow or Wraparound" name="group1" type="radio" id={'inline-1'}></Form.Check>
+                    <Form.Check inline label="2) line 12 : improper initialization" name="group1" type="radio" id={'inline-2'}></Form.Check>
+                    <Form.Check inline label="3) line 8 : Buffer copy without checking size of input" name="group1" type="radio" id={'inline-3'}></Form.Check>
+                    <Form.Check inline label="4) line 13 : Null pointer dereference" name="group1" type="radio" id={'inline-4'}></Form.Check>
                     <Button variant="secondary" style={{ width: '100%', minWidth: '50px', marginBottom:'10px'}}>Submit</Button>
                 </Col>
                 <Col xs={4} className="mt-4">
