@@ -79,12 +79,13 @@ const LandPage: React.FC = () => {
                                 </Button>
                             </Form>
                             {error && <Alert variant="danger">{error}</Alert>}
-                            <Button
+                            <Link to="/signup"><Button
                                 className="btn-primary"
                                 style={{ width: '100%', minWidth: '400px' }}
                             >
                                 Sign Up
-                            </Button>
+                                
+                            </Button></Link>
                         </Card>
                     </Col>
                 </Row>

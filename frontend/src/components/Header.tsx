@@ -1,10 +1,13 @@
 import React from 'react';
 import security_logo from '../assets/security_logo.png';
 import { StyledText } from './StyledText';
+import styled from 'styled-components';
+
+
 
 const Header: React.FC = () => {
     return (
-        <div className="text-center" style={{ backgroundColor: '#EBE2E2' }}>
+        <HeaderContainer>
             <h1 style={{ display: 'inline' }}>
                 <StyledText>Security Edu</StyledText>
             </h1>
@@ -18,8 +21,17 @@ const Header: React.FC = () => {
                     marginBottom: '20px',
                 }}
             />
-        </div>
+        </HeaderContainer>
     );
 };
 
 export default Header;
+
+const HeaderContainer = styled.div`
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background-color: ${(props) => props.theme.colors.background};
+`;
