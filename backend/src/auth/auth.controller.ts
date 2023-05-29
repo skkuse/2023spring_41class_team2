@@ -54,4 +54,10 @@ export class AuthController {
     const user: any = req.user;
     return user;
   }
+
+  @UseGuards(AuthGuard)
+  @Get('myinfo')
+  async myinfo(@Request() req): Promise<any> {
+    return this.authService.getUserInfo(req);
+  }
 }

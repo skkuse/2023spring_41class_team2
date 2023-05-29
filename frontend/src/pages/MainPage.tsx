@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import security_logo from '../assets/security_logo.png';
+import { commonAxios } from 'utils/commonAxios';
+import ProblemList from 'components/ProblemList';
 
 const MainPage: React.FC = () => {
+
+    const [problemList, setProblemList] = useState([]);
+    const [userList, setUserList] = useState([]);
+    const [solvedList, setSolvedList] = useState([]);
+
+    const getProblemList = () => {
+        commonAxios
+            .get('/problems')
+            .then((response) => {
+                setProblemList(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+
+
+    useEffect(() => {
+        getProblemList();
+    }, []);
+
+
     return (
         <div style={{ backgroundColor: '#EBE2E2', minHeight: '100vh' }}>
             <Container
@@ -12,39 +37,7 @@ const MainPage: React.FC = () => {
                 <Row>
                     <Col xs={8} className="mt-4">
                         <Card className="p-4" style={{ minWidth: '300px' }}>
-                            <table
-                                className="table table-bordered w-auto"
-                                style={{ width: '100%' }}
-                            >
-                                <thead>
-                                    <tr>
-                                        <th className="text-center">No</th>
-                                        <th className="text-center">title</th>
-                                        <th className="text-center">
-                                            Description
-                                        </th>
-                                        <th className="text-center">O/X</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Break DB down</td>
-                                        <td>
-                                            The basic concept of SQL injection
-                                        </td>
-                                        <td>O</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Find Candy</td>
-                                        <td className="span 6">
-                                            The basic concept of stack overflow
-                                        </td>
-                                        <td>X</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <ProblemList data={problemList}/>
                         </Card>
                     </Col>
                     <Col xs={4} className="mt-4">

@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyledText } from '../styles/StyledText';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
+import { commonAxios } from 'utils/commonAxios';
+import { getCookie } from 'utils/getCookie';
+import { set } from 'immer/dist/internal';
+import { UserContext } from 'utils/UserProvider';
 
 
 const NavBar: React.FC = () => {
+
+    const { isAdmin, userid, nickname } = useContext(UserContext);
+
     return (
         <NavBarContainer>
-            <StyledText>Hello, user!</StyledText>
+            <StyledText>Hello, {nickname} ! </StyledText>
             <NavBarMenuContainer>
                 <Link to="/mypage"><NavBarText>My Page</NavBarText></Link>
-                <Link to="/admin"><NavBarText>Admin</NavBarText></Link>
+                { isAdmin && <Link to="/admin"><NavBarText>Admin</NavBarText></Link> }
                 <NavBarText>Logout</NavBarText>
             </NavBarMenuContainer>
         </NavBarContainer>

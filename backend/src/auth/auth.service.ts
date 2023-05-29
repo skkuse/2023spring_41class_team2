@@ -34,13 +34,6 @@ export class AuthService {
     return result;
   }
 
-  async logout(user: User) {
-    //need to implement invalidating token
-    return {
-      message: `User ${user.userid} logged out`,
-    };
-  }
-
   async signup(user: CreateUserDto) {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(user.password, salt);
@@ -58,5 +51,20 @@ export class AuthService {
 
   async tokenValidate(payload: any): Promise<any> {
     return await this.usersService.findUserById(payload.userid);
+  }
+
+  //header에 있는 토큰을 가져와서 유저정보를 가져온다.
+  async getUserInfo(req: any): Promise<any> {
+    const token = req.headers.authorization.split(' ')[1];
+    const payload = this.jwtService.verify(token);
+    const user = await this.usersService.findUserById(payload.userid);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    return {
+      userid: user.userid,
+      isAdmin: user.isAdmin,
+      nickname: user.nickname,
+    };
   }
 }

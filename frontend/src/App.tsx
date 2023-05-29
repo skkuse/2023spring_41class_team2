@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 
 
@@ -22,6 +22,10 @@ import ManageProblem from './pages/ManageProblem';
 import SignupPage from './pages/SignupPage';
 import ProblemPage from './pages/ProblemPage';
 import Admin from './pages/Admin';
+import { getCookie } from 'utils/getCookie';
+import { commonAxios } from 'utils/commonAxios';
+import { set } from 'immer/dist/internal';
+import { UserProvider } from 'utils/UserProvider';
 
 const Container = styled.div`
   display: flex;
@@ -31,37 +35,40 @@ const Container = styled.div`
 `;
 
 const App: React.FC = () => {
+
     return (
         
             <div className="App">
                 <ThemeProvider theme={theme}>
-                    <GlobalStyles />
-                    <BrowserRouter>
-                        <Routes>
-                            {/*랜딩, 회원가입 페이지에서 Navbar 표시 안함*/}
-                            <Route path="/" element={<Container>
-                                <Header/>
-                                <LandPage />
-                            </Container>} />
-                            <Route path='/signup' element={<Container>
-                                <Header/>
-                                <SignupPage />
-                            </Container>} />
+                    <UserProvider>
+                        <GlobalStyles />
+                        <BrowserRouter>
+                            <Routes>
+                                {/*랜딩, 회원가입 페이지에서 Navbar 표시 안함*/}
+                                <Route path="/" element={<Container>
+                                    <Header/>
+                                    <LandPage />
+                                </Container>} />
+                                <Route path='/signup' element={<Container>
+                                    <Header/>
+                                    <SignupPage />
+                                </Container>} />
 
-                            <Route path="/main" element={<Container>
-                                <Header/>
-                                <NavBar/>
-                                <MainPage />
-                            </Container>} />
-                            <Route path="/mypage" element={<Container>
-                                <Header/>
-                                <NavBar/>
-                                <Mypage />
-                            </Container>} />
-                            <Route path="/admin" element={<Admin />} />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    </BrowserRouter>
+                                <Route path="/main" element={<Container>
+                                    <Header/>
+                                    <NavBar/>
+                                    <MainPage />
+                                </Container>} />
+                                <Route path="/mypage" element={<Container>
+                                    <Header/>
+                                    <NavBar/>
+                                    <Mypage />
+                                </Container>} />
+                                <Route path="/admin" element={<Admin />} />
+                                <Route path="*" element={<NotFound />} />
+                            </Routes>
+                        </BrowserRouter>
+                    </UserProvider>
                 </ThemeProvider>
             </div>
         
