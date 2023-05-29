@@ -37,6 +37,7 @@ model Problem {
   title             String              @unique
   content           String?
   answer            String
+  code              String?
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   isHidden          Boolean             @default(false)
@@ -49,7 +50,6 @@ model ProblemFile {
   id              Int     @id @default(autoincrement())
   problemid       Int
   problemfilename String  @unique
-  code            String?
   path            String  @unique
   mimetype        String
   problem         Problem @relation(fields: [problemid], references: [id])
