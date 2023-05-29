@@ -48,8 +48,9 @@ model Problem {
 model ProblemFile {
   id              Int     @id @default(autoincrement())
   problemid       Int
-  problemfilename String @unique
-  path            String @unique
+  problemfilename String  @unique
+  code            String?
+  path            String  @unique
   mimetype        String
   problem         Problem @relation(fields: [problemid], references: [id])
 }
