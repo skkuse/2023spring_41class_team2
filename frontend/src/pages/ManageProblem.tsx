@@ -10,28 +10,6 @@ const ManageProblem: React.FC = () => {
             >
                 <Row>
                     <Col>
-                        <div className="text-center mb-4">
-                            <h1
-                                style={{
-                                    fontWeight: 'bold',
-                                    fontFamily: 'Arial, sans-serif',
-                                    display: 'inline',
-                                }}
-                            >
-                                Security Edu
-                            </h1>
-                            <img
-                                src={security_logo}
-                                alt="Logo"
-                                style={{
-                                    width: '50px',
-                                    height: '50px',
-                                    marginLeft: '10px',
-                                    marginBottom: '20px',
-                                }}
-                            />
-                        </div>
-
                         <Card className="p-4" style={{ minWidth: '1000px' }}>
                             <table
                                 className="table table-bordered w-auto"

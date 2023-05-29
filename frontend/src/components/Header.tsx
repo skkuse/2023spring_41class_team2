@@ -1,6 +1,6 @@
 import React from 'react';
 import security_logo from '../assets/security_logo.png';
-import { StyledText } from './StyledText';
+import { StyledText } from '../styles/StyledText';
 import styled from 'styled-components';
 
 

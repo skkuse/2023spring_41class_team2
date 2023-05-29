@@ -11,6 +11,7 @@ import NotFound from './components/NotFound';
 import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
 import { theme } from './styles/theme';
+import GlobalStyles from './styles/GlobalStyles';
 
 // Page imports
 import LandPage from './pages/LandPage';
@@ -20,7 +21,7 @@ import ManageUser from './pages/ManageUser';
 import ManageProblem from './pages/ManageProblem';
 import SignupPage from './pages/SignupPage';
 import ProblemPage from './pages/ProblemPage';
-import Admin from './components/Admin';
+import Admin from './pages/Admin';
 
 const Container = styled.div`
   display: flex;
@@ -29,18 +30,15 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-const ContentBox = styled.div`
-  padding: 50px 0px;
-`;
-
 const App: React.FC = () => {
     return (
         
             <div className="App">
                 <ThemeProvider theme={theme}>
+                    <GlobalStyles />
                     <BrowserRouter>
                         <Routes>
-                            {/*랜딩 페이지에서 Navbar 표시 안함*/}
+                            {/*랜딩, 회원가입 페이지에서 Navbar 표시 안함*/}
                             <Route path="/" element={<Container>
                                 <Header/>
                                 <LandPage />
@@ -55,7 +53,6 @@ const App: React.FC = () => {
                                 <NavBar/>
                                 <MainPage />
                             </Container>} />
-                            
                             <Route path="/mypage" element={<Container>
                                 <Header/>
                                 <NavBar/>

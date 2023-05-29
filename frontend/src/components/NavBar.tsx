@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledText } from './StyledText';
+import { StyledText } from '../styles/StyledText';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -8,11 +8,11 @@ import { Link } from 'react-router-dom';
 const NavBar: React.FC = () => {
     return (
         <NavBarContainer>
-            <h1><StyledText>Hello, user!</StyledText></h1>
+            <StyledText>Hello, user!</StyledText>
             <NavBarMenuContainer>
-                <Link to="/mypage">My Page</Link>
-                <Link to="/admin">Admin</Link>
-                <StyledText>Logout</StyledText>
+                <Link to="/mypage"><NavBarText>My Page</NavBarText></Link>
+                <Link to="/admin"><NavBarText>Admin</NavBarText></Link>
+                <NavBarText>Logout</NavBarText>
             </NavBarMenuContainer>
         </NavBarContainer>
     );
@@ -26,6 +26,7 @@ const NavBarContainer = styled.div`
     align-items: center;
     margin: auto;
     background-color: ${(props) => props.theme.colors.background};
+    text-align: right;
 `;
 
 const NavBarMenuContainer= styled.div`
@@ -34,3 +35,10 @@ const NavBarMenuContainer= styled.div`
   justify-content: flex-end;
   margin-right: 20px;
 `;
+
+const NavBarText = styled.span`
+    font-size: 20px;
+    margin-right: 20px;
+    color: ${(props) => props.theme.colors.green};
+    text-decoration: none;
+`
