@@ -207,6 +207,20 @@ export class UsersService {
       throw new NotFoundException(`No Solved Records found`);
     }
 
-    return leaderboard;
+    const leaderboardWithNicknames = await Promise.all(
+      leaderboard.map(async (entry) => {
+        const user = await this.prisma.user.findUnique({
+          where: { userid: entry.userid },
+          select: { nickname: true },
+        });
+
+        return {
+          ...entry,
+          nickname: user ? user.nickname : null,
+        };
+      }),
+    );
+
+    return leaderboardWithNicknames;
   }
 }
