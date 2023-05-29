@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { commonAxios } from 'utils/commonAxios';
 import {
     Container,
     Row,
@@ -12,21 +12,26 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 
 const LandPage: React.FC = () => {
-    const [userId, setUserId] = useState('');
+    const [userid, setUserid] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        const response = await axios.post('/auth/login', { userId, password }); //테스트 안해봄
-
-        if (response.status === 200) {
-            navigate('/main');
-        } else {
-            setError('Login failed');
-        }
-    };
+        commonAxios.post('/auth/login', { userid, password })
+            .then((response) => {
+                if (response.status === 201) {
+                    navigate('/main');
+                    } else { 
+                        alert('Login failed');
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert('Login failed');
+                });
+            };
 
     return (
         <div style={{ backgroundColor: '#EBE2E2', minHeight: '100vh' }}>
@@ -45,9 +50,9 @@ const LandPage: React.FC = () => {
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter ID"
-                                        value={userId}
+                                        value={userid}
                                         onChange={(e) =>
-                                            setUserId(e.target.value)
+                                            setUserid(e.target.value)
                                         }
                                         style={{ backgroundColor: '#FBF3F3' }}
                                     />

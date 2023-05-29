@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
@@ -17,7 +21,7 @@ export class AuthService {
     const user = await this.usersService.findUserById(userid);
     const match = await bcrypt.compare(pass, user.password);
     if (!user || !match) {
-      throw new UnauthorizedException();
+      throw new BadRequestException();
     }
     const payload = { userid: user.userid, isAdmin: user.isAdmin };
 
