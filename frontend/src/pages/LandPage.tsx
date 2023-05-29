@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getCookie } from 'utils/getCookie';
 import { styled } from 'styled-components';
 import { UserContext } from 'utils/UserProvider';
+import { toast } from 'react-toastify';
 
 const LandPage: React.FC = () => {
     const [userid, setUserid] = useState('');
@@ -31,7 +32,6 @@ const LandPage: React.FC = () => {
             navigate('/main');
         }
     }, [navigate]);
-
     
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -42,12 +42,12 @@ const LandPage: React.FC = () => {
                     fetchMyInfo();
                     navigate('/main');
                     } else { 
-                        alert('Login failed');
+                        toast.error('Login failed');
                     }
                 })
                 .catch((error) => {
                     console.log(error);
-                    alert('Login failed');
+                    toast.error('Login failed');
                 });
             };
 

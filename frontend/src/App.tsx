@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 
 import { Counter } from './features/counter/Counter';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import NavBar from 'components/NavBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -26,6 +27,7 @@ import { getCookie } from 'utils/getCookie';
 import { commonAxios } from 'utils/commonAxios';
 import { set } from 'immer/dist/internal';
 import { UserProvider } from 'utils/UserProvider';
+import { ToastContainer } from 'react-toastify';
 
 const Container = styled.div`
   display: flex;
@@ -67,6 +69,7 @@ const App: React.FC = () => {
                                 <Route path="/admin" element={<Admin />} />
                                 <Route path="*" element={<NotFound />} />
                             </Routes>
+                            <ToastContainer position="bottom-center" autoClose={1000} />
                         </BrowserRouter>
                     </UserProvider>
                 </ThemeProvider>

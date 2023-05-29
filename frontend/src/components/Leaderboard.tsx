@@ -14,8 +14,8 @@ const Leaderboard: React.FC<LeaderboardProps>= ({data}) => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Title</th>
-                        <th>Solved</th>
+                        <th>User</th>
+                        <th>Credit</th>
                     </tr>    
                 </thead>
                 <tbody>
