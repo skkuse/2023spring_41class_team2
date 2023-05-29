@@ -34,12 +34,6 @@ export class ProblemsController {
     return this.problemsService.createProblem(problemData);
   }
 
-  //디버그용
-  @Delete()
-  deleteAllProblem(): Promise<void> {
-    return this.problemsService.deleteAllProblem();
-  }
-
   @Get(':problemId')
   findProblemById(@Param('problemId') problemId: string): Promise<Problem> {
     return this.problemsService.findProblemById(problemId);
@@ -98,7 +92,6 @@ export class ProblemsController {
       this.problemsService.deleteSuggestedQuestionById(suggestedQuestionId);
 
     return suggestedquestion;
-    //이제 받아온 파일id로 문제 생성하면 됨.
   }
 
   // 이건 나중에 파일id로 사진을 가져오는 것.

@@ -33,7 +33,7 @@ export class AuthController {
       maxAge: 3600000,
     });
 
-    return res.send({ message: 'login success' });
+    return res.send(jwt);
   }
 
   @Post('logout')
