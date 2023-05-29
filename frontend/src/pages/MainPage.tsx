@@ -3,11 +3,14 @@ import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import security_logo from '../assets/security_logo.png';
 import { commonAxios } from 'utils/commonAxios';
 import ProblemList from 'components/ProblemList';
+import { get } from 'http';
+import { AxiosResponse } from 'axios';
+import Leaderboard from 'components/Leaderboard';
 
 const MainPage: React.FC = () => {
 
     const [problemList, setProblemList] = useState([]);
-    const [userList, setUserList] = useState([]);
+    const [userList, setUserList] = useState<{ nickname: string; credit: number; }[]>([]);
     const [solvedList, setSolvedList] = useState([]);
 
     const getProblemList = () => {
@@ -21,10 +24,26 @@ const MainPage: React.FC = () => {
             });
     };
 
+    const getUserList = () => {
+        commonAxios
+            .get('users/leaderboard')
+            .then((response: AxiosResponse<{ _count: { problemid: number }, userid: string, nickname: string }[]>) => {
+                const transformedData = response.data.map(({ _count: { problemid }, userid, nickname }) => ({
+                    nickname: userid,
+                    credit: problemid,
+                }));                    
+                setUserList(transformedData);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
 
 
     useEffect(() => {
         getProblemList();
+        getUserList();
     }, []);
 
 
@@ -36,38 +55,13 @@ const MainPage: React.FC = () => {
             >
                 <Row>
                     <Col xs={8} className="mt-4">
-                        <Card className="p-4" style={{ minWidth: '300px' }}>
+                        <Card className="p-4" style={{ minWidth: '600px' }}>
                             <ProblemList data={problemList}/>
                         </Card>
                     </Col>
                     <Col xs={4} className="mt-4">
                         <Card className="p-4" style={{ minWidth: '300px' }}>
-                            <table
-                                className="table table-bordered w-auto"
-                                style={{ width: '100%' }}
-                            >
-                                <thead>
-                                    <tr>
-                                        <th className="text-center">No</th>
-                                        <th className="text-center">
-                                            User Name
-                                        </th>
-                                        <th className="text-center">정답률</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Apple</td>
-                                        <td>65%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Potato</td>
-                                        <td>30%</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <Leaderboard data={userList}/>
                         </Card>
                     </Col>
                 </Row>

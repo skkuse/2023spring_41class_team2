@@ -18,7 +18,7 @@ const Header: React.FC = () => {
                     width: '50px',
                     height: '50px',
                     marginLeft: '10px',
-                    marginBottom: '20px',
+                    marginTop: '0px',
                 }}
             />
         </HeaderContainer>
@@ -32,6 +32,6 @@ const HeaderContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: auto;
+    margin-top: 10px;
     background-color: ${(props) => props.theme.colors.background};
 `;
