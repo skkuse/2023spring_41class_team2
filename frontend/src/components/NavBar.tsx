@@ -17,7 +17,6 @@ const NavBar: React.FC = () => {
     const handleLogout = async () => {
         try {
             await commonAxios.post('/auth/logout');
-            document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             navigate('/');
         } catch (error) {
             console.log(error);

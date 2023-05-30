@@ -92,7 +92,6 @@ export class ProblemsController {
     };
     const uploadedfile = await this.problemsService.saveFileData(fileData);
     if (!uploadedfile) throw new NotFoundException('No file uploaded');
-    console.log(uploadedfile.id);
   }
 
   // 이건 나중에 파일id로 사진을 가져오는 것.

@@ -29,8 +29,6 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
     };
 
-    console.log(result);
-
     return result;
   }
 

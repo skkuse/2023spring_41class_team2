@@ -201,8 +201,6 @@ export class UsersService {
       take: 10, //top 10
     });
 
-    console.log(leaderboard);
-
     if (!leaderboard || leaderboard.length === 0) {
       throw new NotFoundException(`No Solved Records found`);
     }

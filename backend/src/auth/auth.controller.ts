@@ -38,7 +38,8 @@ export class AuthController {
 
   @Post('logout')
   async logout(@Request() req, @Res() res: Response) {
-    res.cookie('jwt', '', { maxAge: 0 });
+    //res.cookie('jwt', '', { maxAge: 0 });
+    res.clearCookie('accessToken');
     return res.send({ message: 'logout success' });
   }
 
