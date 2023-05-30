@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { commonAxios } from 'utils/commonAxios';
 
 const SignupPage: React.FC = () => {
     const [Id, setId] = useState('');
@@ -13,7 +15,9 @@ const SignupPage: React.FC = () => {
     const validateId = (id: string) => {
         const idRegex = /^[a-zA-Z0-9_]{5,20}$/;
         if (!idRegex.test(id)) {
-            alert('아이디는 5~20자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.');
+            alert(
+                '아이디는 5~20자의 영문 대/소문자, 숫자와 특수기호(_)만 사용 가능합니다.'
+            );
             return false;
         }
         return true;
@@ -37,14 +41,33 @@ const SignupPage: React.FC = () => {
     };
 
     const handleSignup = async () => {
-        if ( validateId(Id) && validatePassword(password) && validateEmail(email) && validateUsername(username) ) {
-            const formData = new FormData();
-            formData.append('userid', Id);
-            formData.append('password', password);
-            formData.append('email', email);
-            formData.append('nickname', username);
+        if (
+            validateId(Id) &&
+            validatePassword(password) &&
+            validateEmail(email) &&
+            validateUsername(username)
+        ) {
+            const postData = {
+                userid: Id,
+                password: password,
+                email: email,
+                nickname: username,
+            };
 
-            //axios post
+            commonAxios
+                .post('/auth/signup', postData)
+                .then((response) => {
+                    if (response.status === 201) {
+                        console.log(response.data);
+                        navigate('/');
+                    } else {
+                        toast.error('Signup failed');
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast.error('Signup failed');
+                });
         }
     };
 
@@ -71,6 +94,8 @@ const SignupPage: React.FC = () => {
                             <div className="text-center mt-5">
                                 <Form.Control
                                     type="id"
+                                    value={Id} // 상태 변수와 연결
+                                    onChange={(e) => setId(e.target.value)} // 입력이 변경될 때 상태 업데이트
                                     style={{
                                         width: '100%',
                                         minWidth: '100px',
@@ -80,6 +105,10 @@ const SignupPage: React.FC = () => {
                                 ></Form.Control>
                                 <Form.Control
                                     type="password"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
                                     style={{
                                         width: '100%',
                                         minWidth: '100px',
@@ -89,6 +118,10 @@ const SignupPage: React.FC = () => {
                                 ></Form.Control>
                                 <Form.Control
                                     type="username"
+                                    value={username}
+                                    onChange={(e) =>
+                                        setUsername(e.target.value)
+                                    }
                                     style={{
                                         width: '100%',
                                         minWidth: '100px',
@@ -98,6 +131,8 @@ const SignupPage: React.FC = () => {
                                 ></Form.Control>
                                 <Form.Control
                                     type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     style={{
                                         width: '100%',
                                         minWidth: '100px',
@@ -105,7 +140,8 @@ const SignupPage: React.FC = () => {
                                     }}
                                     placeholder="Email"
                                 ></Form.Control>
-                                <Button onClick={handleSignup}
+                                <Button
+                                    onClick={handleSignup}
                                     variant="secondary"
                                     style={{
                                         width: '100%',

@@ -22,7 +22,6 @@ const LandPage: React.FC = () => {
     const navigate = useNavigate();
     const { updateUserContext } = useContext(UserContext);
 
-
     //사용자가 로그인 한 상태일 경우 메인 페이지로 이동
     useEffect(() => {
         const jwtToken = getCookie('accessToken');
@@ -32,41 +31,49 @@ const LandPage: React.FC = () => {
             navigate('/main');
         }
     }, [navigate]);
-    
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        commonAxios.post('/auth/login', { userid, password })
+        commonAxios
+            .post('/auth/login', { userid, password })
             .then((response) => {
                 if (response.status === 201) {
-                    document.cookie = `accessToken=${response.data.accessToken}; path=/;`
+                    document.cookie = `accessToken=${response.data.accessToken}; path=/;`;
                     fetchMyInfo();
                     navigate('/main');
-                    } else { 
-                        toast.error('Login failed');
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
+                } else {
                     toast.error('Login failed');
-                });
-            };
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                toast.error('Login failed');
+            });
+    };
 
     const fetchMyInfo = () => {
         commonAxios
-        .get('/auth/myinfo', {headers: {Authorization: `Bearer ${getCookie('accessToken')}`}})
-        .then((response) => {
-            console.log(response);
-            
-            updateUserContext(response.data.isAdmin, response.data.userid, response.data.nickname);
-    
-            console.log('fetchMyInfo success');
-        })
-        .catch((error) => {
-            console.log(error);
-        } );
+            .get('/auth/myinfo', {
+                headers: {
+                    Authorization: `Bearer ${getCookie('accessToken')}`,
+                },
+            })
+            .then((response) => {
+                console.log(response);
+
+                updateUserContext(
+                    response.data.isAdmin,
+                    response.data.userid,
+                    response.data.nickname
+                );
+
+                console.log('fetchMyInfo success');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
-    
     const loginByEnter = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
             handleLogin(e);
@@ -74,7 +81,7 @@ const LandPage: React.FC = () => {
     };
 
     return (
-            <LoginContainer>
+        <LoginContainer>
             <Row>
                 <Col>
                     <Card className="p-4" style={{ minWidth: '400px' }}>
@@ -89,7 +96,8 @@ const LandPage: React.FC = () => {
                                     value={userid}
                                     onChange={(e) => setUserid(e.target.value)}
                                     onKeyDown={loginByEnter}
-                                    style={{ backgroundColor: '#FBF3F3' }} />
+                                    style={{ backgroundColor: '#FBF3F3' }}
+                                />
                             </Form.Group>
                             <Form.Group
                                 controlId="formBasicPassword"
@@ -99,9 +107,12 @@ const LandPage: React.FC = () => {
                                     type="password"
                                     placeholder="Enter Password"
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
                                     onKeyDown={loginByEnter}
-                                    style={{ backgroundColor: '#FBF3F3' }} />
+                                    style={{ backgroundColor: '#FBF3F3' }}
+                                />
                             </Form.Group>
                             <Button
                                 type="submit"
@@ -116,13 +127,14 @@ const LandPage: React.FC = () => {
                             </Button>
                         </Form>
                         {error && <Alert variant="danger">{error}</Alert>}
-                        <Link to="/signup"><Button
-                            className="btn-primary"
-                            style={{ width: '100%', minWidth: '400px' }}
-                        >
-                            Sign Up
-
-                        </Button></Link>
+                        <Link to="/signup">
+                            <Button
+                                className="btn-primary"
+                                style={{ width: '100%', minWidth: '400px' }}
+                            >
+                                Sign Up
+                            </Button>
+                        </Link>
                     </Card>
                 </Col>
             </Row>

@@ -8,9 +8,10 @@ import { AxiosResponse } from 'axios';
 import Leaderboard from 'components/Leaderboard';
 
 const MainPage: React.FC = () => {
-
     const [problemList, setProblemList] = useState([]);
-    const [userList, setUserList] = useState<{ nickname: string; credit: number; }[]>([]);
+    const [userList, setUserList] = useState<
+        { nickname: string; credit: number }[]
+    >([]);
     const [solvedList, setSolvedList] = useState([]);
 
     const getProblemList = () => {
@@ -27,25 +28,34 @@ const MainPage: React.FC = () => {
     const getUserList = () => {
         commonAxios
             .get('users/leaderboard')
-            .then((response: AxiosResponse<{ _count: { problemid: number }, userid: string, nickname: string }[]>) => {
-                const transformedData = response.data.map(({ _count: { problemid }, userid, nickname }) => ({
-                    nickname: userid,
-                    credit: problemid,
-                }));                    
-                setUserList(transformedData);
-            })
+            .then(
+                (
+                    response: AxiosResponse<
+                        {
+                            _count: { problemid: number };
+                            userid: string;
+                            nickname: string;
+                        }[]
+                    >
+                ) => {
+                    const transformedData = response.data.map(
+                        ({ _count: { problemid }, userid, nickname }) => ({
+                            nickname: userid,
+                            credit: problemid,
+                        })
+                    );
+                    setUserList(transformedData);
+                }
+            )
             .catch((error) => {
                 console.log(error);
             });
     };
 
-
-
     useEffect(() => {
         getProblemList();
         getUserList();
     }, []);
-
 
     return (
         <div style={{ backgroundColor: '#EBE2E2', minHeight: '100vh' }}>
@@ -56,12 +66,12 @@ const MainPage: React.FC = () => {
                 <Row>
                     <Col xs={8} className="mt-4">
                         <Card className="p-4" style={{ minWidth: '600px' }}>
-                            <ProblemList data={problemList}/>
+                            <ProblemList data={problemList} />
                         </Card>
                     </Col>
                     <Col xs={4} className="mt-4">
                         <Card className="p-4" style={{ minWidth: '300px' }}>
-                            <Leaderboard data={userList}/>
+                            <Leaderboard data={userList} />
                         </Card>
                     </Col>
                 </Row>
