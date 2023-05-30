@@ -10,6 +10,7 @@ import {
   UploadedFile,
   UseInterceptors,
   StreamableFile,
+  Res,
 } from '@nestjs/common';
 import { ProblemsService } from './problems.service';
 import { Problem, SuggestedQuestion } from '@prisma/client';
@@ -59,9 +60,19 @@ export class ProblemsController {
     return this.problemsService.getAllQuestions(problemId);
   }
 
+  @Delete(':problemId/questions/:questionId')
+  deleteSuggestedQuestionById(
+    @Param('questionId') suggestedQuestionId: number,
+  ): Promise<SuggestedQuestion> {
+    const suggestedquestion =
+      this.problemsService.deleteSuggestedQuestionById(suggestedQuestionId);
+
+    return suggestedquestion;
+  }
+
   // 지금 구현된건 이 api가 실행되면,  problem service에서 파일데이터를 file module을 통해 file디비에 저장을 하고, 그 id를 받아옴.
   // 문제정보 생성할 때, 먼저 문제를 생성하고, 그 문제id를 받아서 파일의 정보를 함께 problemfile에 저장하면 됨.
-  @Post('addFile')
+  @Post(':problemid/file')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
@@ -84,20 +95,10 @@ export class ProblemsController {
     console.log(uploadedfile.id);
   }
 
-  @Delete(':problemId/questions/:questionId')
-  deleteSuggestedQuestionById(
-    @Param('questionId') suggestedQuestionId: number,
-  ): Promise<SuggestedQuestion> {
-    const suggestedquestion =
-      this.problemsService.deleteSuggestedQuestionById(suggestedQuestionId);
-
-    return suggestedquestion;
-  }
-
   // 이건 나중에 파일id로 사진을 가져오는 것.
-  @Get(':id')
+  @Get(':problemid/:id')
   async getProblemFile(@Param('id') id: number) {
-    const dbfile = await this.problemsService.getFileBtId(id);
+    const dbfile = await this.problemsService.getFileById(id);
     const stream = createReadStream(join(process.cwd(), dbfile.path));
     response.set({
       'Content-Disposition': `inline; filename="${dbfile.filename}"`,

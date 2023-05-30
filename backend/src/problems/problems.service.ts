@@ -197,7 +197,7 @@ export class ProblemsService {
     return newFileData;
   }
 
-  async getFileBtId(fileId: number): Promise<any> {
+  async getFileById(fileId: number): Promise<any> {
     const dbfile = await this.prisma.problemFile.findUnique({
       where: { id: fileId },
     });
