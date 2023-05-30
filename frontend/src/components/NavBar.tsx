@@ -6,11 +6,24 @@ import { commonAxios } from 'utils/commonAxios';
 import { getCookie } from 'utils/getCookie';
 import { set } from 'immer/dist/internal';
 import { UserContext } from 'utils/UserProvider';
-
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar: React.FC = () => {
 
     const { isAdmin, userid, nickname } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await commonAxios.post('/auth/logout');
+            document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+            toast.error('Logout Fail');
+        }
+    };
 
     return (
         <NavBarContainer>
@@ -18,7 +31,7 @@ const NavBar: React.FC = () => {
             <NavBarMenuContainer>
                 <Link to="/mypage"><NavBarText>My Page</NavBarText></Link>
                 { isAdmin && <Link to="/admin"><NavBarText>Admin</NavBarText></Link> }
-                <NavBarText>Logout</NavBarText>
+                <NavBarText onClick={handleLogout}>Logout</NavBarText>
             </NavBarMenuContainer>
         </NavBarContainer>
     );
