@@ -1,13 +1,15 @@
 import React from 'react';
 import security_logo from '../assets/security_logo.png';
 import { StyledText } from '../styles/StyledText';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-
+const StyledLink = styled(Link) `text-decoration: none;` ;
 
 const Header: React.FC = () => {
     return (
         <HeaderContainer>
+            <StyledLink to="/main">
             <h1 style={{ display: 'inline' }}>
                 <StyledText>Security Edu</StyledText>
             </h1>
@@ -21,6 +23,7 @@ const Header: React.FC = () => {
                     marginTop: '0px',
                 }}
             />
+           </StyledLink>
         </HeaderContainer>
     );
 };
