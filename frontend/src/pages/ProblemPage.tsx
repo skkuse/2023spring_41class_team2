@@ -4,6 +4,17 @@ import security_logo from '../assets/security_logo.png';
 import chat_image from '../assets/chat.png';
 import user_image from '../assets/user.png';
 import CodeEditor from '@uiw/react-textarea-code-editor';
+const text = `Write the number of the correct pairs\n
+What is the error of this code?\n
+The malicious code is in Line (A), the reason is (B).\n
+(1) (A) - 13 (B) - Integer Overflow or Wraparound\n
+(2) (A) - 12 (B) - Improper initialization\n
+(3) (A) - 08 (B) - Buffer copy without checking size of input\n
+(4) (A) - 13 (B) - Null pointer dereference\n
+`;
+const paragraphStyle = {
+    whiteSpace: 'pre-wrap',
+  };
 const ProblemPage: React.FC = () => {
     return (
         <div style={{ backgroundColor: '#EBE2E2', minHeight: '100vh' }}>
@@ -16,6 +27,7 @@ const ProblemPage: React.FC = () => {
                         <Card className="p-4" style={{ minWidth: '200px' }}>
                             <Row>
                                 <Col xs={8} className="mt-4">
+                                    <p>{`${text}`}</p>
                                     <CodeEditor
                                         value="#include <unistd.h>
 #include <stdlib.h> 
@@ -41,47 +53,55 @@ int main()
                                                 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
                                         }}
                                     />
-                                    <Form.Check
-                                        inline
-                                        label="1) line 13 : Integer Overflow or Wraparound"
-                                        name="group1"
-                                        type="radio"
-                                        id={'inline-1'}
-                                    ></Form.Check>
-                                    <Form.Check
-                                        inline
-                                        label="2) line 12 : improper initialization"
-                                        name="group1"
-                                        type="radio"
-                                        id={'inline-2'}
-                                    ></Form.Check>
-                                    <Form.Check
-                                        inline
-                                        label="3) line 8 : Buffer copy without checking size of input"
-                                        name="group1"
-                                        type="radio"
-                                        id={'inline-3'}
-                                    ></Form.Check>
-                                    <Form.Check
-                                        inline
-                                        label="4) line 13 : Null pointer dereference"
-                                        name="group1"
-                                        type="radio"
-                                        id={'inline-4'}
-                                    ></Form.Check>
+                                    <Row>
+                                        <Col>
+                                            <Form.Control
+                                                type="text"
+                                                style={{
+                                                    width: '100%',
+                                                    minWidth: '130px',
+                                                    marginBottom: '10px',
+                                                }}
+                                                placeholder="Type your answer"
+                                            ></Form.Control>
+                                        </Col>
+                                        <Col>
+                                            <Button
+                                            variant="secondary"
+                                            style={{
+                                                width: '100%',
+                                                minWidth: '50px',
+                                                marginBottom: '10px',
+                                            }}
+                                        >
+                                            Submit
+                                        </Button>
+                                        </Col>
+                                    </Row>
+                                    <b>Recommended Questions</b>
                                     <Button
-                                        variant="secondary"
+                                        variant="light"
                                         style={{
                                             width: '100%',
                                             minWidth: '50px',
                                             marginBottom: '10px',
                                         }}
                                     >
-                                        Submit
+                                        What happen if we cast negative signed to unsigned int?
+                                    </Button>
+                                    <Button
+                                        variant="light"
+                                        style={{
+                                            width: '100%',
+                                            minWidth: '50px',
+                                            marginBottom: '10px',
+                                        }}
+                                    >
+                                        What happen if we set the size of malloc to negative values?
                                     </Button>
                                 </Col>
                                 <Col xs={4} className="mt-4">
-                                    <div overflow-y="auto">
+                                    <div>
                                         <div className="d-flex flex-row justify-content-end">
                                             <div>
                                                 <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
@@ -103,7 +123,7 @@ int main()
                                         <div className="d-flex flex-row justify-content-start">
                                             <img
                                                 src={chat_image}
-                                                alt="charGPT"
+                                                alt="chatGPT"
                                                 style={{
                                                     width: '45px',
                                                     height: '100%',
@@ -145,7 +165,7 @@ int main()
                                         <div className="d-flex flex-row justify-content-start">
                                             <img
                                                 src={chat_image}
-                                                alt="charGPT"
+                                                alt="chatGPT"
                                                 style={{
                                                     width: '45px',
                                                     height: '100%',
@@ -187,7 +207,7 @@ int main()
                                         <div className="d-flex flex-row justify-content-start">
                                             <img
                                                 src={chat_image}
-                                                alt="charGPT"
+                                                alt="chatGPT"
                                                 style={{
                                                     width: '45px',
                                                     height: '100%',
@@ -209,7 +229,7 @@ int main()
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
+                                    <Row>
                                         <Col xs={8} className="mt-4">
                                             <Form.Control
                                                 type="text"
@@ -233,7 +253,7 @@ int main()
                                                 Ask
                                             </Button>
                                         </Col>
-                                    </div>
+                                    </Row>
                                 </Col>
                             </Row>
                         </Card>
