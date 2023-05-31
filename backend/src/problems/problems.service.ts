@@ -27,20 +27,24 @@ export class ProblemsService {
         id: parseInt(problemId),
       },
     });
-
+  
     if (!problem) {
       throw new NotFoundException(`Problem with ID ${problemId} not found`);
     }
+
+    // console.log(problem.content.toString('utf-8'));
+    // console.log(problem.code.toString('utf-8'));
 
     return problem;
   }
 
   async createProblem(problemData: CreateProblemDto): Promise<Problem> {
     const { title, content, answer } = problemData;
+    const bufferContent = Buffer.from(content, 'utf-8');
     return await this.prisma.problem.create({
       data: {
         title: title,
-        content: content,
+        content: bufferContent,
         answer: answer,
       },
     });
@@ -134,7 +138,7 @@ export class ProblemsService {
 
     if (!question) {
       throw new NotFoundException(
-        `Suggested Question with ID ${suggestedQuestionId} not found`,
+        "Suggested Question with ID ${suggestedQuestionId} not found",
       );
     }
 
