@@ -16,6 +16,7 @@ import GlobalStyles from './styles/GlobalStyles';
 
 // Page imports
 import LandPage from './pages/LandPage';
+import EditnAddPage from './pages/EditnAddPage'
 import MainPage from './pages/MainPage';
 import Mypage from './pages/MyPage';
 import ManageUser from './pages/ManageUser';
@@ -60,6 +61,21 @@ const App: React.FC = () => {
                                     <Header/>
                                     <NavBar/>
                                     <MainPage />
+                                </Container>} />
+                                <Route path="/manageproblem" element={<Container>
+                                    <Header/>
+                                    <NavBar/>
+                                    <ManageProblem />
+                                </Container>} />
+                                <Route path="/editnaddproblem" element={<Container>
+                                    <Header/>
+                                    <NavBar/>
+                                    <EditnAddPage />
+                                </Container>} />
+                                <Route path="/problempage" element={<Container>
+                                    <Header/>
+                                    <NavBar/>
+                                    <ProblemPage />
                                 </Container>} />
                                 <Route path="/mypage" element={<Container>
                                     <Header/>
