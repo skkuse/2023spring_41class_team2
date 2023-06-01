@@ -6,6 +6,7 @@ import ProblemList from 'components/ProblemList';
 import { get } from 'http';
 import { AxiosResponse } from 'axios';
 import Leaderboard from 'components/Leaderboard';
+import { styled } from 'styled-components';
 
 const MainPage: React.FC = () => {
     const [problemList, setProblemList] = useState([]);
@@ -58,11 +59,7 @@ const MainPage: React.FC = () => {
     }, []);
 
     return (
-        <div style={{ backgroundColor: '#EBE2E2', minHeight: '100vh' }}>
-            <Container
-                className="d-flex justify-content-center align-items-start"
-                style={{ minHeight: '10vh' }}
-            >
+            <MainPageContainer>
                 <Row>
                     <Col xs={8} className="mt-4">
                         <Card className="p-4" style={{ minWidth: '600px' }}>
@@ -75,9 +72,17 @@ const MainPage: React.FC = () => {
                         </Card>
                     </Col>
                 </Row>
-            </Container>
-        </div>
+            </MainPageContainer>
     );
 };
 
 export default MainPage;
+
+const MainPageContainer = styled.div`
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    background-color: ${(props) => props.theme.colors.background};
+`

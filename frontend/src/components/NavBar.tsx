@@ -27,7 +27,7 @@ const NavBar: React.FC = () => {
     return (
         <NavBarContainer>
             <NavBarMenuContainer>
-                <StyledText style={{marginRight: '20px'}}> {nickname} </StyledText>
+                <NavBarText> {nickname} </NavBarText>
                 <StyledLink to="/mypage" style={{}}><NavBarText>My Page |</NavBarText></StyledLink>
                 { isAdmin && <Link to="/admin"><NavBarText>Admin |</NavBarText></Link> }
                 <StyledLink to =''> <NavBarText onClick={handleLogout}>Logout</NavBarText> </StyledLink>
@@ -63,8 +63,5 @@ const NavBarText = styled.span`
     margin-right: 20px;
     color: ${(props) => props.theme.colors.black};
     text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
     font-weight: bold;
 `

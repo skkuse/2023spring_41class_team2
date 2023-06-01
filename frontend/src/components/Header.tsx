@@ -20,7 +20,7 @@ const Header: React.FC = () => {
                     width: '50px',
                     height: '50px',
                     marginLeft: '10px',
-                    marginTop: '0px',
+                    marginBottom: '30px',
                 }}
             />
            </StyledLink>
@@ -36,5 +36,5 @@ const HeaderContainer = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 10px;
-    background-color: ${(props) => props.theme.colors.background};
+    background-color: ${(props) => props.theme.colors.header};
 `;
