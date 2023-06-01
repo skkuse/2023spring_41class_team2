@@ -7,6 +7,7 @@ import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import NavBar from 'components/NavBar';
+import Footer from './components/Footer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import { ThemeProvider } from 'styled-components';
@@ -51,36 +52,43 @@ const App: React.FC = () => {
                                 <Route path="/" element={<Container>
                                     <Header/>
                                     <LandPage />
+                                    <Footer />
                                 </Container>} />
                                 <Route path='/signup' element={<Container>
                                     <Header/>
                                     <SignupPage />
+                                    <Footer />
                                 </Container>} />
 
                                 <Route path="/main" element={<Container>
                                     <Header/>
                                     <NavBar/>
                                     <MainPage />
+                                    <Footer />
                                 </Container>} />
                                 <Route path="/manageproblem" element={<Container>
                                     <Header/>
                                     <NavBar/>
                                     <ManageProblem />
+                                    <Footer />
                                 </Container>} />
                                 <Route path="/editnaddproblem" element={<Container>
                                     <Header/>
                                     <NavBar/>
                                     <EditnAddPage />
+                                    <Footer />
                                 </Container>} />
                                 <Route path="/problempage" element={<Container>
                                     <Header/>
                                     <NavBar/>
                                     <ProblemPage />
+                                    <Footer />
                                 </Container>} />
                                 <Route path="/mypage" element={<Container>
                                     <Header/>
                                     <NavBar/>
                                     <Mypage />
+                                    <Footer />
                                 </Container>} />
                                 <Route path="/admin" element={<Admin />} />
                                 <Route path="*" element={<NotFound />} />
