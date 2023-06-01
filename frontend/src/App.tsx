@@ -90,6 +90,11 @@ const App: React.FC = () => {
                                     <Mypage />
                                     <Footer />
                                 </Container>} />
+                                <Route path="/problem/:problemid" element={<Container>
+                                    <Header/>
+                                    <NavBar/>
+                                    <ProblemPage />
+                                </Container>} />
                                 <Route path="/admin" element={<Admin />} />
                                 <Route path="*" element={<NotFound />} />
                             </Routes>
