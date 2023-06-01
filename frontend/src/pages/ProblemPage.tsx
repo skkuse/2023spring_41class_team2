@@ -4,6 +4,7 @@ import security_logo from '../assets/security_logo.png';
 import chat_image from '../assets/chat.png';
 import user_image from '../assets/user.png';
 import CodeEditor from '@uiw/react-textarea-code-editor';
+import CardHeader from 'react-bootstrap/esm/CardHeader';
 const text = `Write the number of the correct pairs\n\
 What is the error of this code?\n\
 The malicious code is in Line (A), the reason is (B).\n\
@@ -12,9 +13,7 @@ The malicious code is in Line (A), the reason is (B).\n\
 (3) (A) - 08 (B) - Buffer copy without checking size of input\n\
 (4) (A) - 13 (B) - Null pointer dereference\n\
 `;
-const paragraphStyle = {
-    whiteSpace: 'pre-wrap',
-  };
+
 const ProblemPage: React.FC = () => {
     return (
         <div style={{ backgroundColor: '#EBE2E2', minHeight: '100vh' }}>
@@ -102,134 +101,152 @@ int main()
                                     </Button>
                                 </Col>
                                 <Col xs={4} className="mt-4">
-                                    <div>
-                                        <div className="d-flex flex-row justify-content-end">
-                                            <div>
-                                                <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
-                                                    Question to the chat
-                                                </p>
-                                                <p className="small me-3 mb-3 rounded-3 text-muted">
-                                                    12:00 PM | Aug 13
-                                                </p>
-                                            </div>
-                                            <img
-                                                src={user_image}
-                                                alt="user"
-                                                style={{
-                                                    width: '45px',
-                                                    height: '100%',
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="d-flex flex-row justify-content-start">
-                                            <img
-                                                src={chat_image}
-                                                alt="chatGPT"
-                                                style={{
-                                                    width: '45px',
-                                                    height: '100%',
-                                                }}
-                                            />
-                                            <div>
-                                                <p
-                                                    className="small p-2 ms-3 mb-1 rounded-3"
+                                    <Card id="chat1" style={{ borderRadius: "15px" }}>
+                                        <CardHeader className="d-flex justify-content-between align-items-center p-3 bg-custom text-white border-bottom-0"
+                                        style={{
+                                            borderTopLeftRadius: "15px",
+                                            borderTopRightRadius: "15px",
+                                            backgroundColor: "black",
+                                        }}
+                                        >
+                                            <p className="mb-0 fw-bold">Live chat</p>
+
+                                        </CardHeader>
+                                        <div style={{overflow: 'scroll', height: '600px'}}>
+                                            <div className="d-flex flex-row justify-content-end">
+                                                <div>
+                                                    <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                                                        Question to the chat
+                                                    </p>
+                                                    <p className="small me-3 mb-3 rounded-3 text-muted">
+                                                        12:00 PM | Aug 13
+                                                    </p>
+                                                </div>
+                                                <img
+                                                    src={user_image}
+                                                    alt="user"
                                                     style={{
-                                                        backgroundColor:
-                                                            '#f5f6f7',
+                                                        width: '45px',
+                                                        height: '100%',
                                                     }}
-                                                >
-                                                    The Answer to the question
-                                                </p>
-                                                <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
-                                                    12:00 PM | Aug 13
-                                                </p>
+                                                />
                                             </div>
-                                        </div>
-                                        <div className="d-flex flex-row justify-content-end">
-                                            <div>
-                                                <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
-                                                    Question to the chat
-                                                </p>
-                                                <p className="small me-3 mb-3 rounded-3 text-muted">
-                                                    12:00 PM | Aug 13
-                                                </p>
-                                            </div>
-                                            <img
-                                                src={user_image}
-                                                alt="user"
-                                                style={{
-                                                    width: '45px',
-                                                    height: '100%',
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="d-flex flex-row justify-content-start">
-                                            <img
-                                                src={chat_image}
-                                                alt="chatGPT"
-                                                style={{
-                                                    width: '45px',
-                                                    height: '100%',
-                                                }}
-                                            />
-                                            <div>
-                                                <p
-                                                    className="small p-2 ms-3 mb-1 rounded-3"
+                                            <div className="d-flex flex-row justify-content-start">
+                                                <img
+                                                    src={chat_image}
+                                                    alt="chatGPT"
                                                     style={{
-                                                        backgroundColor:
-                                                            '#f5f6f7',
+                                                        width: '45px',
+                                                        height: '100%',
                                                     }}
-                                                >
-                                                    The Answer to the question
-                                                </p>
-                                                <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
-                                                    12:00 PM | Aug 13
-                                                </p>
+                                                />
+                                                <div>
+                                                    <p
+                                                        className="small p-2 ms-3 mb-1 rounded-3"
+                                                        style={{
+                                                            backgroundColor:
+                                                                '#f5f6f7',
+                                                        }}
+                                                    >
+                                                        The Answer to the question
+                                                    </p>
+                                                    <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
+                                                        12:00 PM | Aug 13
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="d-flex flex-row justify-content-end">
-                                            <div>
-                                                <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
-                                                    Question to the chat
-                                                </p>
-                                                <p className="small me-3 mb-3 rounded-3 text-muted">
-                                                    12:00 PM | Aug 13
-                                                </p>
-                                            </div>
-                                            <img
-                                                src={user_image}
-                                                alt="user"
-                                                style={{
-                                                    width: '45px',
-                                                    height: '100%',
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="d-flex flex-row justify-content-start">
-                                            <img
-                                                src={chat_image}
-                                                alt="chatGPT"
-                                                style={{
-                                                    width: '45px',
-                                                    height: '100%',
-                                                }}
-                                            />
-                                            <div>
-                                                <p
-                                                    className="small p-2 ms-3 mb-1 rounded-3"
+                                            <div className="d-flex flex-row justify-content-end">
+                                                <div>
+                                                    <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                                                        Question to the chat
+                                                    </p>
+                                                    <p className="small me-3 mb-3 rounded-3 text-muted">
+                                                        12:00 PM | Aug 13
+                                                    </p>
+                                                </div>
+                                                <img
+                                                    src={user_image}
+                                                    alt="user"
                                                     style={{
-                                                        backgroundColor:
-                                                            '#f5f6f7',
+                                                        width: '45px',
+                                                        height: '100%',
                                                     }}
-                                                >
-                                                    The Answer to the question
-                                                </p>
-                                                <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
-                                                    12:00 PM | Aug 13
-                                                </p>
+                                                />
+                                            </div>
+                                            <div className="d-flex flex-row justify-content-start">
+                                                <img
+                                                    src={chat_image}
+                                                    alt="chatGPT"
+                                                    style={{
+                                                        width: '45px',
+                                                        height: '100%',
+                                                    }}
+                                                />
+                                                <div>
+                                                    <p
+                                                        className="small p-2 ms-3 mb-1 rounded-3"
+                                                        style={{
+                                                            backgroundColor:
+                                                                '#f5f6f7',
+                                                        }}
+                                                    >
+                                                        The Answer to the question
+                                                    </p>
+                                                    <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
+                                                        12:00 PM | Aug 13
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="d-flex flex-row justify-content-end">
+                                                <div>
+                                                    <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                                                    What happen if we cast negative signed to unsigned int?
+                                                    </p>
+                                                    <p className="small me-3 mb-3 rounded-3 text-muted">
+                                                        12:00 PM | Aug 13
+                                                    </p>
+                                                </div>
+                                                <img
+                                                    src={user_image}
+                                                    alt="user"
+                                                    style={{
+                                                        width: '45px',
+                                                        height: '100%',
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="d-flex flex-row justify-content-start">
+                                                <img
+                                                    src={chat_image}
+                                                    alt="chatGPT"
+                                                    style={{
+                                                        width: '45px',
+                                                        height: '100%',
+                                                    }}
+                                                />
+                                                <div>
+                                                    <p
+                                                        className="small p-2 ms-3 mb-1 rounded-3"
+                                                        style={{
+                                                            backgroundColor:
+                                                                '#f5f6f7',
+                                                        }}
+                                                    >
+                                                        When you cast a negative signed integer to an unsigned integer, the result depends on the range of values that can be represented by the unsigned integer type.
+
+    In most programming languages, the casting operation simply changes the interpretation of the bits in memory without changing their actual values. If the negative signed integer is within the range of representable values for the unsigned integer type, the resulting value will be the same in both the signed and unsigned forms.
+
+    However, if the negative signed integer falls outside the range of representable values for the unsigned integer type, the behavior is implementation-defined. This means that the result is not guaranteed and may vary depending on the specific programming language, compiler, and platform.
+
+    In some cases, the result of casting a negative signed integer to an unsigned integer may wrap around and produce a large positive value. This is known as integer overflow. For example, consider casting -1 (signed) to an 8-bit unsigned integer. The result would be 255 (unsigned).
+                                                    </p>
+                                                    <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
+                                                        12:00 PM | Aug 13
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Card>
                                     <Row>
                                         <Col xs={8} className="mt-4">
                                             <Form.Control
