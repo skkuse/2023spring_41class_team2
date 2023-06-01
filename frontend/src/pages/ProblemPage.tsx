@@ -4,13 +4,13 @@ import security_logo from '../assets/security_logo.png';
 import chat_image from '../assets/chat.png';
 import user_image from '../assets/user.png';
 import CodeEditor from '@uiw/react-textarea-code-editor';
-const text = `Write the number of the correct pairs\n
-What is the error of this code?\n
-The malicious code is in Line (A), the reason is (B).\n
-(1) (A) - 13 (B) - Integer Overflow or Wraparound\n
-(2) (A) - 12 (B) - Improper initialization\n
-(3) (A) - 08 (B) - Buffer copy without checking size of input\n
-(4) (A) - 13 (B) - Null pointer dereference\n
+const text = `Write the number of the correct pairs\n\
+What is the error of this code?\n\
+The malicious code is in Line (A), the reason is (B).\n\
+(1) (A) - 13 (B) - Integer Overflow or Wraparound\n\
+(2) (A) - 12 (B) - Improper initialization\n\
+(3) (A) - 08 (B) - Buffer copy without checking size of input\n\
+(4) (A) - 13 (B) - Null pointer dereference\n\
 `;
 const paragraphStyle = {
     whiteSpace: 'pre-wrap',
@@ -27,7 +27,8 @@ const ProblemPage: React.FC = () => {
                         <Card className="p-4" style={{ minWidth: '200px' }}>
                             <Row>
                                 <Col xs={8} className="mt-4">
-                                    <p>{`${text}`}</p>
+                                    <b className='fs-2'>Question #7</b>
+                                    <p  style={{ whiteSpace: 'pre-line' }}>{text}</p>
                                     <CodeEditor
                                         value="#include <unistd.h>
 #include <stdlib.h> 
