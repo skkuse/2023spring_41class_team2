@@ -26,11 +26,11 @@ const NavBar: React.FC = () => {
 
     return (
         <NavBarContainer>
-            <StyledText>Hello, {nickname} ! </StyledText>
             <NavBarMenuContainer>
-                <Link to="/mypage"><NavBarText>My Page</NavBarText></Link>
-                { isAdmin && <Link to="/admin"><NavBarText>Admin</NavBarText></Link> }
-                <NavBarText onClick={handleLogout}>Logout</NavBarText>
+                <StyledText style={{marginRight: '20px'}}> {nickname} </StyledText>
+                <StyledLink to="/mypage" style={{}}><NavBarText>My Page |</NavBarText></StyledLink>
+                { isAdmin && <Link to="/admin"><NavBarText>Admin |</NavBarText></Link> }
+                <StyledLink to =''> <NavBarText onClick={handleLogout}>Logout</NavBarText> </StyledLink>
             </NavBarMenuContainer>
         </NavBarContainer>
     );
@@ -54,9 +54,17 @@ const NavBarMenuContainer= styled.div`
   margin-right: 20px;
 `;
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;
+
 const NavBarText = styled.span`
     font-size: 20px;
     margin-right: 20px;
-    color: ${(props) => props.theme.colors.green};
+    color: ${(props) => props.theme.colors.black};
     text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+    font-weight: bold;
 `
