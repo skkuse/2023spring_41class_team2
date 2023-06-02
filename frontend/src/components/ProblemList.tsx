@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import { StyledText } from '../styles/StyledText';
+import { Link } from 'react-router-dom';
 
 type ProblemListProps = {
     data: { id: number; title: string }[];
@@ -25,9 +26,9 @@ const ProblemList: React.FC<ProblemListProps> = ({ data }) => {
                         <tr key={problem.id}>
                             <td>{index + 1}</td>
                             <td>
-                                <a href={`/problem/${problem.id}`}>
+                                <Link to={`/problem/${problem.id}`}>
                                     {problem.title}
-                                </a>
+                                </Link>
                             </td>
                         </tr>
                     ))}
