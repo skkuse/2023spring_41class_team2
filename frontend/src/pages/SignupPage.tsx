@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { commonAxios } from 'utils/commonAxios';
+import { commonAxios } from '../utils/commonAxios';
 
 const SignupPage: React.FC = () => {
     const [Id, setId] = useState('');
