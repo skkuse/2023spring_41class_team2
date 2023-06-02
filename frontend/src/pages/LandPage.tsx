@@ -64,7 +64,8 @@ const LandPage: React.FC = () => {
                 updateUserContext(
                     response.data.isAdmin,
                     response.data.userid,
-                    response.data.nickname
+                    response.data.nickname,
+                    response.data.email,
                 );
 
                 console.log('fetchMyInfo success');
