@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { commonAxios } from 'utils/commonAxios';
+import { commonAxios } from '../utils/commonAxios';
 import {
     Container,
     Row,
@@ -10,9 +10,9 @@ import {
     Alert,
 } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { getCookie } from 'utils/getCookie';
+import { getCookie } from '../utils/getCookie';
 import { styled } from 'styled-components';
-import { UserContext } from 'utils/UserProvider';
+import { UserContext } from '../utils/UserProvider';
 import { toast } from 'react-toastify';
 
 const LandPage: React.FC = () => {

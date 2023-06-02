@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import security_logo from '../assets/security_logo.png';
-import { commonAxios } from 'utils/commonAxios';
-import ProblemList from 'components/ProblemList';
+import { commonAxios } from '../utils/commonAxios';
+import ProblemList from '../components/ProblemList';
 import { get } from 'http';
 import { AxiosResponse } from 'axios';
-import Leaderboard from 'components/Leaderboard';
+import Leaderboard from '../components/Leaderboard';
 
 const MainPage: React.FC = () => {
     const [problemList, setProblemList] = useState([]);
