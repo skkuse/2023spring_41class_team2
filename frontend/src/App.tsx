@@ -4,6 +4,8 @@ import { Counter } from './features/counter/Counter';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
+
+import Footer from './components/Footer';
 import NavBar from './components/NavBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NotFound from './components/NotFound';
@@ -50,6 +52,7 @@ const App: React.FC = () => {
                                     <Container>
                                         <Header />
                                         <LandPage />
+                                        <Footer />
                                     </Container>
                                 }
                             />
@@ -59,6 +62,7 @@ const App: React.FC = () => {
                                     <Container>
                                         <Header />
                                         <SignupPage />
+                                        <Footer />
                                     </Container>
                                 }
                             />
@@ -70,6 +74,7 @@ const App: React.FC = () => {
                                         <Header />
                                         <NavBar />
                                         <MainPage />
+                                        <Footer />
                                     </Container>
                                 }
                             />
@@ -80,6 +85,7 @@ const App: React.FC = () => {
                                         <Header />
                                         <NavBar />
                                         <ManageProblem />
+                                        <Footer />
                                     </Container>
                                 }
                             />
@@ -90,6 +96,7 @@ const App: React.FC = () => {
                                         <Header />
                                         <NavBar />
                                         <EditnAddPage />
+                                        <Footer />
                                     </Container>
                                 }
                             />
@@ -100,6 +107,7 @@ const App: React.FC = () => {
                                         <Header />
                                         <NavBar />
                                         <ProblemPage />
+                                        <Footer />
                                     </Container>
                                 }
                             />
@@ -110,6 +118,17 @@ const App: React.FC = () => {
                                         <Header />
                                         <NavBar />
                                         <Mypage />
+                                        <Footer />
+                                    </Container>
+                                }
+                            />
+                            <Route
+                                path="/problem/:problemid"
+                                element={
+                                    <Container>
+                                        <Header />
+                                        <NavBar />
+                                        <ProblemPage />
                                     </Container>
                                 }
                             />
