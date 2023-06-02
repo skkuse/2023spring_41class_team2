@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 
-import { Counter } from './features/counter/Counter';
-import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 
@@ -27,9 +25,9 @@ import Admin from './pages/Admin';
 import { getCookie } from './utils/getCookie';
 import { commonAxios } from './utils/commonAxios';
 import { set } from 'immer/dist/internal';
-import { UserContext, UserProvider } from 'utils/UserProvider';
+import { UserContext, UserProvider } from './utils/UserProvider';
 import { ToastContainer } from 'react-toastify';
-import PrivateRoute from 'utils/PrivateRoute';
+import PrivateRoute from './utils/PrivateRoute';
 
 const Container = styled.div`
     display: flex;
@@ -68,62 +66,83 @@ const App: React.FC = () => {
                                 }
                             />
 
-                                <Route path="/main" element={<Container>
-                                    <Header/>
-                                    <NavBar/>
-                                    <MainPage />
-                                    <Footer />
-                                </Container>} />
-                                <Route path="/manageproblem" element={<Container>
-                                    <Header/>
-                                    <NavBar/>
-                                    <ManageProblem />
-                                    <Footer />
-                                </Container>} />
-                                <Route path="/editnaddproblem" element={<Container>
-                                    <Header/>
-                                    <NavBar/>
-                                    <EditnAddPage />
-                                    <Footer />
-                                </Container>} />
-                                <Route path="/problempage" element={<Container>
-                                    <Header/>
-                                    <NavBar/>
-                                    <ProblemPage />
-                                    <Footer />
-                                </Container>} />
-                                <Route path="/mypage" element={<Container>
-                                    <Header/>
-                                    <NavBar/>
-                                    <Mypage />
-                                    <Footer />
-                                </Container>} />
-                                <Route path="/problem/:problemid" element={<Container>
-                                    <Header/>
-                                    <NavBar/>
-                                    <ProblemPage />
-                                </Container>} />
-                                <Route
+                            <Route
+                                path="/main"
+                                element={
+                                    <Container>
+                                        <Header />
+                                        <NavBar />
+                                        <MainPage />
+                                        <Footer />
+                                    </Container>
+                                }
+                            />
+                            <Route
+                                path="/manageproblem"
+                                element={
+                                    <Container>
+                                        <Header />
+                                        <NavBar />
+                                        <ManageProblem />
+                                        <Footer />
+                                    </Container>
+                                }
+                            />
+                            <Route
+                                path="/editnaddproblem"
+                                element={
+                                    <Container>
+                                        <Header />
+                                        <NavBar />
+                                        <EditnAddPage />
+                                        <Footer />
+                                    </Container>
+                                }
+                            />
+                            <Route
+                                path="/mypage"
+                                element={
+                                    <Container>
+                                        <Header />
+                                        <NavBar />
+                                        <Mypage />
+                                        <Footer />
+                                    </Container>
+                                }
+                            />
+                            <Route
+                                path="/problem/:problemid"
+                                element={
+                                    <Container>
+                                        <Header />
+                                        <NavBar />
+                                        <ProblemPage />
+                                    </Container>
+                                }
+                            />
+                            <Route
                                 path="/admin"
                                 element={
                                     <PrivateRoute>
                                         <Container>
-                                        <Header/>
-                                        <NavBar/>
-                                        <Admin />
-                                    </Container>
+                                            <Header />
+                                            <NavBar />
+                                            <Admin />
+                                        </Container>
                                     </PrivateRoute>
                                 }
-                                />
+                            />
 
-                                <Route path="*" element={<NotFound />} />
-                            </Routes>
-                            <ToastContainer position="bottom-center" autoClose={1000} />
-                        </BrowserRouter>
-                    </UserProvider>
-                </ThemeProvider>
-            </div>
-        
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                        <ToastContainer
+                            position="bottom-center"
+                            autoClose={1000}
+                        />
+                    </BrowserRouter>
+                </UserProvider>
+            </ThemeProvider>
+        </div>
     );
 };
 
