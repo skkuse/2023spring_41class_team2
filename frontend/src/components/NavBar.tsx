@@ -8,6 +8,7 @@ import { set } from 'immer/dist/internal';
 import { UserContext } from '../utils/UserProvider';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { deleteCookie } from '../utils/deleteCookie';
 
 const NavBar: React.FC = () => {
     const { isAdmin, userid, nickname } = useContext(UserContext);
@@ -15,11 +16,10 @@ const NavBar: React.FC = () => {
 
     const handleLogout = async () => {
         try {
-            await commonAxios.post('/auth/logout');
-            navigate('/');
+            deleteCookie('accessToken');
+            navigate("/");
         } catch (error) {
             console.log(error);
-            toast.error('Logout Fail');
         }
     };
 
@@ -36,8 +36,10 @@ const NavBar: React.FC = () => {
                     </Link>
                 )}
                 <StyledLink to="">
-                    {' '}
-                    <NavBarText onClick={handleLogout}>Logout</NavBarText>{' '}
+                    <NavBarText onClick={(e) => {
+                        e.preventDefault();
+                        handleLogout();
+                    }}>Logout</NavBarText>
                 </StyledLink>
             </NavBarMenuContainer>
         </NavBarContainer>
