@@ -10,7 +10,6 @@ import {
 import { UsersService } from './users.service';
 import { Speaker, User } from '@prisma/client';
 import { AdminGuard } from 'src/auth/guard/admin.guard';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -35,7 +34,7 @@ export class UsersController {
   @Patch(':userId')
   async updateUser(
     @Param('userId') userId: string,
-    @Body() data: UpdateUserDto,
+    @Body() data: any,
   ): Promise<any> {
     const updatedUser = await this.usersService.updateUser(userId, data);
     const { password, ...result } = updatedUser;

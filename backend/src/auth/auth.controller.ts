@@ -13,7 +13,6 @@ import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { AuthGuard } from './guard/auth.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { AdminGuard } from './guard/admin.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -37,7 +36,7 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(@Request() req, @Res() res: Response) {
+  logout(@Request() req, @Res() res: Response) {
     //res.cookie('jwt', '', { maxAge: 0 });
     res.clearCookie('accessToken');
     return res.send({ message: 'logout success' });
@@ -45,20 +44,21 @@ export class AuthController {
 
   @UsePipes(ValidationPipe)
   @Post('signup')
-  async signup(@Body() userData: CreateUserDto) {
+  signup(@Body() userData: CreateUserDto) {
     return this.authService.signup(userData);
   }
 
-  @UseGuards(AuthGuard, AdminGuard)
-  @Get('authenticate')
-  async authenticate(@Request() req): Promise<any> {
-    const user: any = req.user;
-    return user;
+  @Post('validate')
+  validate(
+    @Body('userid') userid: string,
+    @Body('password') password: string,
+  ): Promise<any> {
+    return this.authService.validateUser(userid, password);
   }
 
   @UseGuards(AuthGuard)
   @Get('myinfo')
-  async myinfo(@Request() req): Promise<any> {
+  myinfo(@Request() req): Promise<any> {
     return this.authService.getUserInfo(req);
   }
 }
