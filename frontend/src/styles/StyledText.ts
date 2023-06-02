@@ -5,3 +5,7 @@ export const StyledText = styled.span`
     font-family: 'inter';
     color: ${(props) => props.theme.colors.text};
 `;
+
+export const StyledHeaderText = styled(StyledText)`
+    font-size: 1.5rem;
+`;

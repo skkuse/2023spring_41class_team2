@@ -7,5 +7,7 @@ export const theme = {
         green: '#03AC13',
         black: '#000000',
         white: '#FFFFFF',
+        grey: '#7F7F7F',
+        formBackground: '#ced3db',
     },
 };
