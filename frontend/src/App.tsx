@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 
 
@@ -28,8 +28,9 @@ import Admin from './pages/Admin';
 import { getCookie } from 'utils/getCookie';
 import { commonAxios } from 'utils/commonAxios';
 import { set } from 'immer/dist/internal';
-import { UserProvider } from 'utils/UserProvider';
+import { UserContext, UserProvider } from 'utils/UserProvider';
 import { ToastContainer } from 'react-toastify';
+import PrivateRoute from 'utils/PrivateRoute';
 
 const Container = styled.div`
   display: flex;
@@ -95,7 +96,19 @@ const App: React.FC = () => {
                                     <NavBar/>
                                     <ProblemPage />
                                 </Container>} />
-                                <Route path="/admin" element={<Admin />} />
+                                <Route
+                                path="/admin"
+                                element={
+                                    <PrivateRoute>
+                                        <Container>
+                                        <Header/>
+                                        <NavBar/>
+                                        <Admin />
+                                    </Container>
+                                    </PrivateRoute>
+                                }
+                                />
+
                                 <Route path="*" element={<NotFound />} />
                             </Routes>
                             <ToastContainer position="bottom-center" autoClose={1000} />
