@@ -70,7 +70,7 @@ model Solved {
 model SuggestedQuestion {
   id        Int     @id @default(autoincrement())
   problemid Int
-  content   String
+  content   String 
   answer    String?
   problem   Problem @relation(fields: [problemid], references: [id])
 }
@@ -80,6 +80,6 @@ model Chatlog {
   solvedid  Int
   speaker   Speaker
   createdAt DateTime @default(now())
-  content   String
+  content   String   @db.VarChar(2000)
   solved    Solved   @relation(fields: [solvedid], references: [id])
 }
