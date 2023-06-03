@@ -167,7 +167,7 @@ export class UsersService {
         solvedid: solved.id,
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
       take: 100,
     });
@@ -181,7 +181,7 @@ export class UsersService {
     speaker: Speaker,
     content: string,
   ): Promise<any> {
-    const solved = await this.prisma.solved.findUnique({
+    let solved = await this.prisma.solved.findUnique({
       where: {
         userid_problemid: {
           userid: userId,
@@ -189,6 +189,16 @@ export class UsersService {
         },
       },
     });
+
+    if (!solved) {
+      solved = await this.prisma.solved.create({
+        data: {
+          userid: userId,
+          problemid: parseInt(problemId),
+          status: Status.Wrong,
+        },
+      });
+    }
 
     const newChatLog = await this.prisma.chatlog.create({
       data: {
