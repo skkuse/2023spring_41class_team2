@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -10,16 +8,78 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  userid String @unique
-  password String
-  nickname String @unique
-  email String @unique
-  role UserRole @default(USER)
+enum Status {
+  Solved
+  Wrong
 }
 
-enum UserRole {
-  USER
-  ADMIN
+enum Speaker {
+  User
+  Chatbot
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  userid     String    @unique
+  password   String
+  nickname   String    @unique
+  email      String    @unique
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  unbannedAt DateTime?
+  isAdmin    Boolean   @default(false)
+  isBanned   Boolean   @default(false)
+  Solved     Solved[] //refers to many-to-many relation between user and problem
+}
+
+model Problem {
+  id                Int                 @id @default(autoincrement())
+  title             String              @unique
+  content           Bytes?
+  answer            String
+  code              Bytes?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  isHidden          Boolean             @default(false)
+  Solved            Solved[] //refers to many-to-many relation between user and problem
+  SuggestedQuestion SuggestedQuestion[] //refers to one-to-many relation between problem and suggestedquestion
+  ProblemFile       ProblemFile[] //refers to one-to-many relation between problem and suggestedquestion
+}
+
+model ProblemFile {
+  id              Int     @id @default(autoincrement())
+  problemid       Int
+  problemfilename String  @unique
+  path            String  @unique
+  mimetype        String
+  problem         Problem @relation(fields: [problemid], references: [id])
+}
+
+model Solved {
+  id        Int       @id @default(autoincrement())
+  userid    String
+  problemid Int
+  status    Status?
+  Chatlog   Chatlog[]
+  problem   Problem   @relation(fields: [problemid], references: [id])
+  user      User      @relation(fields: [userid], references: [userid])
+
+  @@unique([userid, problemid])
+}
+
+model SuggestedQuestion {
+  id        Int     @id @default(autoincrement())
+  problemid Int
+  content   String 
+  answer    String?
+  problem   Problem @relation(fields: [problemid], references: [id])
+}
+
+model Chatlog {
+  id        Int      @id @default(autoincrement())
+  solvedid  Int
+  speaker   Speaker
+  createdAt DateTime @default(now())
+  content   String   @db.VarChar(2000)
+  solved    Solved   @relation(fields: [solvedid], references: [id])
 }
