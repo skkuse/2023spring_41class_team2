@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { StyledHeaderText, StyledText } from '../styles/StyledText';
 import { UserContext } from '../utils/UserProvider';
-import Toggle from 'react-toggle';
 import { commonAxios } from '../utils/commonAxios';
 import ToggleSwitch from '../components/ToggleSwitch';
 import { toast } from 'react-toastify';

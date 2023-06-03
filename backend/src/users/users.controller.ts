@@ -15,6 +15,18 @@ import { AdminGuard } from 'src/auth/guard/admin.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(AdminGuard)
+  @Get()
+  async getAllUsers(): Promise<any> {
+    const users = await this.usersService.findAllUsers();
+
+    users.forEach((user) => {
+      delete user.password;
+    });
+
+    return users;
+  }
+
   @Get('leaderboard')
   getLeaderboard(): Promise<any> {
     return this.usersService.getLeaderboard();
