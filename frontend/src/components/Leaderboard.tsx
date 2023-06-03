@@ -15,9 +15,9 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>User</th>
-                        <th>Credit</th>
+                        <th className="text-center">#</th>
+                        <th className="text-center">User</th>
+                        <th className="text-center">Credit</th>
                     </tr>
                 </thead>
                 <tbody>

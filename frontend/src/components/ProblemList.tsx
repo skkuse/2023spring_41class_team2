@@ -4,10 +4,23 @@ import { StyledText } from '../styles/StyledText';
 import { Link } from 'react-router-dom';
 
 type ProblemListProps = {
-    data: { id: number; title: string }[];
+    problemData: { id: number; title: string; solvedList: any }[];
+    solvedData: { problemid: number; status: string }[];
 };
 
-const ProblemList: React.FC<ProblemListProps> = ({ data }) => {
+const ProblemList: React.FC<ProblemListProps> = ({
+    problemData,
+    solvedData,
+}) => {
+    const modifiedData = problemData.map((problem) => ({
+        id: problem.id,
+        title: problem.title,
+        isSolved: solvedData.some(
+            (solved) =>
+                solved.problemid === problem.id && solved.status === 'Solved'
+        ),
+    }));
+
     return (
         <div>
             <h3>
@@ -17,18 +30,21 @@ const ProblemList: React.FC<ProblemListProps> = ({ data }) => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Title</th>
-                        <th>Solved</th>
+                        <th className="text-center">Title</th>
+                        <th className="text-center">Solved</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((problem, index) => (
+                    {modifiedData.map((problem, index) => (
                         <tr key={problem.id}>
                             <td>{index + 1}</td>
-                            <td>
+                            <td className="text-center">
                                 <Link to={`/problem/${problem.id}`}>
                                     {problem.title}
                                 </Link>
+                            </td>
+                            <td className="text-center">
+                                {problem.isSolved ? 'O' : ''}
                             </td>
                         </tr>
                     ))}

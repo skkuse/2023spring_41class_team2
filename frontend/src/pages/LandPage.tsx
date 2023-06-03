@@ -36,10 +36,10 @@ const LandPage: React.FC = () => {
         e.preventDefault();
         commonAxios
             .post('/auth/login', { userid, password })
-            .then((response) => {
+            .then(async (response) => {
                 if (response.status === 201) {
                     document.cookie = `accessToken=${response.data.accessToken}; path=/;`;
-                    fetchMyInfo();
+                    await fetchMyInfo();
                     navigate('/main');
                 } else {
                     toast.error('Login failed');
@@ -51,28 +51,27 @@ const LandPage: React.FC = () => {
             });
     };
 
-    const fetchMyInfo = () => {
-        commonAxios
-            .get('/auth/myinfo', {
+    const fetchMyInfo = async () => {
+        try {
+            const response = await commonAxios.get('/auth/myinfo', {
                 headers: {
                     Authorization: `Bearer ${getCookie('accessToken')}`,
                 },
-            })
-            .then((response) => {
-                console.log(response);
-
-                updateUserContext(
-                    response.data.isAdmin,
-                    response.data.userid,
-                    response.data.nickname,
-                    response.data.email,
-                );
-
-                console.log('fetchMyInfo success');
-            })
-            .catch((error) => {
-                console.log(error);
             });
+
+            console.log(response);
+
+            updateUserContext(
+                response.data.isAdmin,
+                response.data.userid,
+                response.data.nickname,
+                response.data.email
+            );
+
+            console.log('fetchMyInfo success');
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const loginByEnter = (e: React.KeyboardEvent) => {

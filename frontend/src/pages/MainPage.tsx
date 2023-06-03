@@ -8,7 +8,7 @@ import Leaderboard from '../components/Leaderboard';
 import { UserContext } from '../utils/UserProvider';
 
 const MainPage: React.FC = () => {
-    const { userid } = useContext(UserContext);
+    const { userid, nickname } = useContext(UserContext);
     const [problemList, setProblemList] = useState([]);
     const [userList, setUserList] = useState<
         { nickname: string; credit: number }[]
@@ -52,7 +52,7 @@ const MainPage: React.FC = () => {
                 ) => {
                     const transformedData = response.data.map(
                         ({ _count: { problemid }, userid, nickname }) => ({
-                            nickname: userid,
+                            nickname: nickname,
                             credit: problemid,
                         })
                     );
@@ -75,7 +75,10 @@ const MainPage: React.FC = () => {
             <Row>
                 <Col xs={8} className="mt-4">
                     <Card className="p-4" style={{ minWidth: '600px' }}>
-                        <ProblemList data={problemList} />
+                        <ProblemList
+                            problemData={problemList}
+                            solvedData={solvedList}
+                        />
                     </Card>
                 </Col>
                 <Col xs={4} className="mt-4">
