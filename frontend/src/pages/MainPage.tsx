@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import security_logo from '../assets/security_logo.png';
+import React, { useContext, useEffect, useState } from 'react';
+import { Row, Col, Card } from 'react-bootstrap';
 import { commonAxios } from '../utils/commonAxios';
 import ProblemList from '../components/ProblemList';
-import { get } from 'http';
 import { AxiosResponse } from 'axios';
 import { styled } from 'styled-components';
 import Leaderboard from '../components/Leaderboard';
+import { UserContext } from '../utils/UserProvider';
 
 const MainPage: React.FC = () => {
+    const { userid } = useContext(UserContext);
     const [problemList, setProblemList] = useState([]);
     const [userList, setUserList] = useState<
         { nickname: string; credit: number }[]
@@ -20,6 +20,17 @@ const MainPage: React.FC = () => {
             .get('/problems')
             .then((response) => {
                 setProblemList(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const getSolvedList = () => {
+        commonAxios
+            .get(`/users/${userid}/solved`)
+            .then((response) => {
+                setSolvedList(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -56,6 +67,7 @@ const MainPage: React.FC = () => {
     useEffect(() => {
         getProblemList();
         getUserList();
+        getSolvedList();
     }, []);
 
     return (

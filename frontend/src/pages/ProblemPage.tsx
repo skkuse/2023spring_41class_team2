@@ -125,7 +125,7 @@ const ProblemPage: React.FC = () => {
                                     })}
                                 </Col>
                                 <Col xs={4} className="mt-4">
-                                    <Chatbox />
+                                    <Chatbox problemid={problemid} />
                                 </Col>
                             </Row>
                         </Card>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Table } from 'react-bootstrap';
 import { StyledText } from '../styles/StyledText';
 import { Link } from 'react-router-dom';
