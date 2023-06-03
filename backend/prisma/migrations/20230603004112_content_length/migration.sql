@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `chatlog` MODIFY `content` VARCHAR(2000) NOT NULL;
+ALTER TABLE `Chatlog` MODIFY `content` VARCHAR(2000) NOT NULL;

@@ -23,7 +23,7 @@ COPY --from=dev /app/package*.json ./
 COPY --from=dev /app/dist ./dist
 COPY --from=dev /app/prisma ./prisma
 
-
 EXPOSE 3000
 
 CMD ["npm", "run", "start:migrate:prod"]
+CMD ["node", "dist/prisma/seed.js"]
