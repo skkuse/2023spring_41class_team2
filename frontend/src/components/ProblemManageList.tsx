@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { StyledHeaderText } from '../styles/StyledText';
+import { Link } from 'react-router-dom';
 
 type ProblemManageListProps = {
     data: { id: number; title: string }[];
@@ -25,13 +26,18 @@ const ProblemManageList: React.FC<ProblemManageListProps> = ({ data }) => {
                             <td className="text-center">{index + 1}</td>
                             <td className="text-center">{problem.title}</td>
                             <td className="text-center">
-                                <Button className="mx-2">Edit</Button>
+                                <Link to={`/admin/problem/${problem.id}`}>
+                                    <Button className="mx-2">Edit</Button>
+                                </Link>
                                 <Button className="btn-danger">Delete</Button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
+            <Link to="/admin/problem/add">
+                <Button className="mx-2">Add Problem</Button>
+            </Link>
         </div>
     );
 };

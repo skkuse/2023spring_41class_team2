@@ -1,12 +1,7 @@
 import React, { useContext, useEffect } from 'react';
-import { StyledText } from '../styles/StyledText';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { commonAxios } from '../utils/commonAxios';
-import { getCookie } from '../utils/getCookie';
-import { set } from 'immer/dist/internal';
 import { UserContext } from '../utils/UserProvider';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { deleteCookie } from '../utils/deleteCookie';
 
@@ -17,7 +12,7 @@ const NavBar: React.FC = () => {
     const handleLogout = async () => {
         try {
             deleteCookie('accessToken');
-            navigate("/");
+            navigate('/');
         } catch (error) {
             console.log(error);
         }
@@ -26,20 +21,24 @@ const NavBar: React.FC = () => {
     return (
         <NavBarContainer>
             <NavBarMenuContainer>
-                <NavBarText> {nickname} </NavBarText>
+                <NavBarText>Welcome, {nickname}! </NavBarText>
                 <StyledLink to="/mypage" style={{}}>
                     <NavBarText>My Page |</NavBarText>
                 </StyledLink>
                 {isAdmin && (
-                    <Link to="/admin">
+                    <StyledLink to="/admin">
                         <NavBarText>Admin |</NavBarText>
-                    </Link>
+                    </StyledLink>
                 )}
                 <StyledLink to="">
-                    <NavBarText onClick={(e) => {
-                        e.preventDefault();
-                        handleLogout();
-                    }}>Logout</NavBarText>
+                    <NavBarText
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleLogout();
+                        }}
+                    >
+                        Logout
+                    </NavBarText>
                 </StyledLink>
             </NavBarMenuContainer>
         </NavBarContainer>
@@ -66,6 +65,7 @@ const NavBarMenuContainer = styled.div`
 
 const StyledLink = styled(Link)`
     text-decoration: none;
+    margin: 0;
 `;
 
 const NavBarText = styled.span`

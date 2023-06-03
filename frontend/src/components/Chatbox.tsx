@@ -24,11 +24,21 @@ const Chatbox = (props: any) => {
         getMessages();
     }, []);
 
+    useEffect(() => {
+        getMessages();
+    }, [currentInput]);
+
+    useEffect(() => {
+        setCurrentInput(props.selectedQuestion);
+    }, [props.selectedQuestion]);
+
     const sendMessage = async () => {
         const newQuestion = {
             speaker: 'User',
             content: currentInput,
         };
+
+        setMessages((prevMessages) => [...prevMessages, newQuestion]);
 
         commonAxios
             .post(
@@ -37,7 +47,6 @@ const Chatbox = (props: any) => {
             )
             .then((res) => {
                 if (res.status === 200) {
-                    console.log(res.data);
                     setMessages((messages) => [...messages, newQuestion]);
                 }
             })
@@ -56,11 +65,12 @@ const Chatbox = (props: any) => {
             content: answer,
         };
 
+        setMessages((prevMessages) => [...prevMessages, newAnswer]);
+
         commonAxios
             .post(`/users/${userid}/solved/${props.problemid}/chat/`, newAnswer)
             .then((res) => {
                 if (res.status === 200) {
-                    console.log(res.data);
                     setMessages((messages) => [...messages, newAnswer]);
                 }
             })
@@ -95,8 +105,13 @@ const Chatbox = (props: any) => {
             </ChatMessageContainer>
             <InputContainer>
                 <Form.Control
+                    as="textarea"
                     value={currentInput}
                     onChange={(e) => setCurrentInput(e.target.value)}
+                    style={{
+                        overflowY: 'auto',
+                        maxHeight: '500px',
+                    }}
                 />
                 <Button onClick={sendMessage}>Send</Button>
             </InputContainer>
@@ -105,13 +120,6 @@ const Chatbox = (props: any) => {
 };
 
 export default Chatbox;
-
-// const scrollToBottom = () => {
-//     if (ChatMessageContainer.current) {
-//         ChatMessageContainer.current.scrollTop =
-//             ChatMessageContainer.current.scrollHeight;
-//     }
-// };
 
 const ChatboxContainer = styled.div`
     background-color: ${theme.colors.grey};

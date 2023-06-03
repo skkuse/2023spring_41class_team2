@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-
+import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
-
+import { UserContext, UserProvider } from './utils/UserProvider';
+import { ToastContainer } from 'react-toastify';
+import PrivateRoute from './utils/PrivateRoute';
 import Footer from './components/Footer';
 import NavBar from './components/NavBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -14,20 +15,12 @@ import GlobalStyles from './styles/GlobalStyles';
 
 // Page imports
 import LandPage from './pages/LandPage';
-import EditnAddPage from './pages/EditnAddPage';
 import MainPage from './pages/MainPage';
 import Mypage from './pages/MyPage';
-import ManageUser from './pages/ManageUser';
-import ManageProblem from './pages/ManageProblem';
 import SignupPage from './pages/SignupPage';
 import ProblemPage from './pages/ProblemPage';
 import Admin from './pages/Admin';
-import { getCookie } from './utils/getCookie';
-import { commonAxios } from './utils/commonAxios';
-import { set } from 'immer/dist/internal';
-import { UserContext, UserProvider } from './utils/UserProvider';
-import { ToastContainer } from 'react-toastify';
-import PrivateRoute from './utils/PrivateRoute';
+import ProblemFormPage from './pages/ProblemFormPage';
 
 const Container = styled.div`
     display: flex;
@@ -78,28 +71,6 @@ const App: React.FC = () => {
                                 }
                             />
                             <Route
-                                path="/manageproblem"
-                                element={
-                                    <Container>
-                                        <Header />
-                                        <NavBar />
-                                        <ManageProblem />
-                                        <Footer />
-                                    </Container>
-                                }
-                            />
-                            <Route
-                                path="/editnaddproblem"
-                                element={
-                                    <Container>
-                                        <Header />
-                                        <NavBar />
-                                        <EditnAddPage />
-                                        <Footer />
-                                    </Container>
-                                }
-                            />
-                            <Route
                                 path="/mypage"
                                 element={
                                     <Container>
@@ -128,6 +99,32 @@ const App: React.FC = () => {
                                             <Header />
                                             <NavBar />
                                             <Admin />
+                                        </Container>
+                                    </PrivateRoute>
+                                }
+                            />
+
+                            <Route
+                                path="/admin/problem/add"
+                                element={
+                                    <PrivateRoute>
+                                        <Container>
+                                            <Header />
+                                            <NavBar />
+                                            <ProblemFormPage />
+                                        </Container>
+                                    </PrivateRoute>
+                                }
+                            />
+
+                            <Route
+                                path="/admin/problem/:problemid"
+                                element={
+                                    <PrivateRoute>
+                                        <Container>
+                                            <Header />
+                                            <NavBar />
+                                            <ProblemFormPage />
                                         </Container>
                                     </PrivateRoute>
                                 }

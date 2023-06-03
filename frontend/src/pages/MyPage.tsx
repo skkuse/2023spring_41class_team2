@@ -54,7 +54,6 @@ const MyPage: React.FC = () => {
             .post('auth/validate', { userid: userid, password: CurPassword })
             .then((res) => {
                 if (res.status === 201) {
-                    console.log('Current password is correct');
                     return true;
                 } else {
                     toast.error('Current password is wrong');

@@ -15,7 +15,7 @@ const SignupPage: React.FC = () => {
     const validateId = (id: string) => {
         const idRegex = /^[a-zA-Z0-9_]{5,20}$/;
         if (!idRegex.test(id)) {
-            alert(
+            toast.error(
                 '아이디는 5~20자의 영문 대/소문자, 숫자와 특수기호(_)만 사용 가능합니다.'
             );
             return false;
@@ -30,7 +30,7 @@ const SignupPage: React.FC = () => {
     const validateEmail = (email: string) => {
         const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
         if (!emailRegex.test(email)) {
-            alert('이메일 형식이 올바르지 않습니다.');
+            toast.error('이메일 형식이 올바르지 않습니다.');
             return false;
         }
         return true;
@@ -58,14 +58,12 @@ const SignupPage: React.FC = () => {
                 .post('/auth/signup', postData)
                 .then((response) => {
                     if (response.status === 201) {
-                        console.log(response.data);
                         navigate('/');
                     } else {
                         toast.error('Signup failed');
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
                     toast.error('Signup failed');
                 });
         }

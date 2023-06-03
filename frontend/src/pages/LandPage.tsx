@@ -25,7 +25,6 @@ const LandPage: React.FC = () => {
     //사용자가 로그인 한 상태일 경우 메인 페이지로 이동
     useEffect(() => {
         const jwtToken = getCookie('accessToken');
-        console.log(jwtToken);
 
         if (jwtToken) {
             navigate('/main');

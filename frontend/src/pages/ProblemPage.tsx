@@ -1,22 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import chat_image from '../assets/chat.png';
-import user_image from '../assets/user.png';
 import CodeEditor from '@uiw/react-textarea-code-editor';
-import CardHeader from 'react-bootstrap/esm/CardHeader';
 import Chatbox from '../components/Chatbox';
 import { commonAxios } from '../utils/commonAxios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { UserContext } from '../utils/UserProvider';
 
 const ProblemPage: React.FC = () => {
+    const navigate = useNavigate();
     const [content, setContent] = useState('');
     const [code, setCode] = useState('');
+    const [answer, setAnswer] = useState('');
+    const [userAnswer, setUserAnswer] = useState('');
     const [questions, setQuestions] = useState([]);
+    const [selectedQuestion, setSelectedQuestion] = useState('');
     const { problemid } = useParams<{ problemid: string }>();
+    const { userid } = useContext(UserContext);
 
-    useEffect(() => {
-        console.log(problemid);
-    }, [problemid]);
+    const validateSubmission = async () => {
+        if (userAnswer === answer) {
+            const data = {
+                submittedValue: userAnswer,
+            };
+
+            commonAxios
+                .post(`/users/${userid}/solved/${problemid}`, data)
+                .then((res) => {
+                    if (res.status === 201) {
+                        toast.success('Correct Answer! Back to main page.');
+                        setTimeout(() => {
+                            navigate('/main');
+                        }, 2000);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            toast.error('Wrong Answer!');
+        }
+    };
+
+    const handleQuestionClick = (questionContent: string) => {
+        setSelectedQuestion(questionContent);
+    };
 
     const getProblemData = () => {
         commonAxios
@@ -31,9 +59,7 @@ const ProblemPage: React.FC = () => {
                     const code = decoder.decode(codeBuffer);
                     setContent(content);
                     setCode(code);
-
-                    console.log(`Content: ${content}`);
-                    console.log(`Code: ${code}`);
+                    setAnswer(res.data.answer);
                 }
             })
             .catch((err) => {
@@ -45,7 +71,6 @@ const ProblemPage: React.FC = () => {
             .then((res) => {
                 if (res.status === 200) {
                     setQuestions(res.data);
-                    console.log(res.data);
                 }
             })
             .catch((err) => {
@@ -56,6 +81,10 @@ const ProblemPage: React.FC = () => {
     useEffect(() => {
         getProblemData();
     }, []);
+
+    useEffect(() => {
+        getProblemData();
+    }, [problemid]);
 
     return (
         <div style={{ backgroundColor: '#EBE2E2', minHeight: '100vh' }}>
@@ -85,6 +114,12 @@ const ProblemPage: React.FC = () => {
                                     <Row>
                                         <Col>
                                             <Form.Control
+                                                value={userAnswer}
+                                                onChange={(e: any) =>
+                                                    setUserAnswer(
+                                                        e.target.value
+                                                    )
+                                                }
                                                 type="text"
                                                 style={{
                                                     width: '100%',
@@ -96,6 +131,7 @@ const ProblemPage: React.FC = () => {
                                         </Col>
                                         <Col>
                                             <Button
+                                                onClick={validateSubmission}
                                                 variant="secondary"
                                                 style={{
                                                     width: '100%',
@@ -118,6 +154,11 @@ const ProblemPage: React.FC = () => {
                                                     minWidth: '50px',
                                                     marginBottom: '10px',
                                                 }}
+                                                onClick={() =>
+                                                    handleQuestionClick(
+                                                        question.content
+                                                    )
+                                                }
                                             >
                                                 {question.content}
                                             </Button>
@@ -125,7 +166,10 @@ const ProblemPage: React.FC = () => {
                                     })}
                                 </Col>
                                 <Col xs={4} className="mt-4">
-                                    <Chatbox problemid={problemid} />
+                                    <Chatbox
+                                        problemid={problemid}
+                                        selectedQuestion={selectedQuestion}
+                                    />
                                 </Col>
                             </Row>
                         </Card>

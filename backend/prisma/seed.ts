@@ -28,6 +28,7 @@ async function main() {
       password: hashedPassword,
       email: 'bob@prisma.io',
       nickname: 'Bob',
+      isAdmin: true,
     },
   });
 

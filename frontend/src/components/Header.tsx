@@ -4,26 +4,28 @@ import { StyledText } from '../styles/StyledText';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const StyledLink = styled(Link) `text-decoration: none;` ;
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;
 
 const Header: React.FC = () => {
     return (
         <HeaderContainer>
-            <StyledLink to="/main">
-            <h1 style={{ display: 'inline' }}>
-                <StyledText>Security Edu</StyledText>
-            </h1>
-            <img
-                src={security_logo}
-                alt="Logo"
-                style={{
-                    width: '50px',
-                    height: '50px',
-                    marginLeft: '10px',
-                    marginBottom: '30px',
-                }}
-            />
-           </StyledLink>
+            <StyledLink to="/">
+                <h1 style={{ display: 'inline' }}>
+                    <StyledText>Security Edu</StyledText>
+                </h1>
+                <img
+                    src={security_logo}
+                    alt="Logo"
+                    style={{
+                        width: '50px',
+                        height: '50px',
+                        marginLeft: '10px',
+                        marginBottom: '30px',
+                    }}
+                />
+            </StyledLink>
         </HeaderContainer>
     );
 };

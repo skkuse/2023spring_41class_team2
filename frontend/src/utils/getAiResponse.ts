@@ -25,10 +25,8 @@ export const getAiResponse = async (prompt: string): Promise<string> => {
             'https://api.openai.com/v1/completions',
             params
         );
-        console.log(result.data.choices[0].text);
         return result.data.choices[0].text;
     } catch (err) {
-        console.log(err);
         return 'Error';
     }
 };
