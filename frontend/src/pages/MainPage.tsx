@@ -65,10 +65,15 @@ const MainPage: React.FC = () => {
     };
 
     useEffect(() => {
-        getProblemList();
         getUserList();
-        getSolvedList();
+        getProblemList();
     }, []);
+
+    useEffect(() => {
+        if (userid && nickname) {
+            getSolvedList();
+        }
+    }, [userid, nickname]);
 
     return (
         <MainPageContainer>
