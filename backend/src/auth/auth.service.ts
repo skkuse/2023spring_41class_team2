@@ -60,8 +60,9 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     return {
-      userid: user.userid,
       isAdmin: user.isAdmin,
+      isBanned: user.isBanned,
+      userid: user.userid,
       nickname: user.nickname,
       email: user.email,
     };

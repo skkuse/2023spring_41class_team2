@@ -21,6 +21,7 @@ import SignupPage from './pages/SignupPage';
 import ProblemPage from './pages/ProblemPage';
 import Admin from './pages/Admin';
 import ProblemFormPage from './pages/ProblemFormPage';
+import AdminRoute from './utils/AdminRoute';
 
 const Container = styled.div`
     display: flex;
@@ -62,71 +63,77 @@ const App: React.FC = () => {
                             <Route
                                 path="/main"
                                 element={
-                                    <Container>
-                                        <Header />
-                                        <NavBar />
-                                        <MainPage />
-                                        <Footer />
-                                    </Container>
+                                    <PrivateRoute>
+                                        <Container>
+                                            <Header />
+                                            <NavBar />
+                                            <MainPage />
+                                            <Footer />
+                                        </Container>
+                                    </PrivateRoute>
                                 }
                             />
                             <Route
                                 path="/mypage"
                                 element={
-                                    <Container>
-                                        <Header />
-                                        <NavBar />
-                                        <Mypage />
-                                        <Footer />
-                                    </Container>
+                                    <PrivateRoute>
+                                        <Container>
+                                            <Header />
+                                            <NavBar />
+                                            <Mypage />
+                                            <Footer />
+                                        </Container>
+                                    </PrivateRoute>
                                 }
                             />
                             <Route
                                 path="/problem/:problemid"
                                 element={
-                                    <Container>
-                                        <Header />
-                                        <NavBar />
-                                        <ProblemPage />
-                                    </Container>
+                                    <PrivateRoute>
+                                        <Container>
+                                            <Header />
+                                            <NavBar />
+                                            <ProblemPage />
+                                        </Container>
+                                    </PrivateRoute>
                                 }
                             />
                             <Route
                                 path="/admin"
                                 element={
-                                    <PrivateRoute>
+                                    <AdminRoute>
                                         <Container>
                                             <Header />
                                             <NavBar />
                                             <Admin />
                                         </Container>
-                                    </PrivateRoute>
+                                    </AdminRoute>
                                 }
                             />
 
                             <Route
                                 path="/admin/problem/add"
                                 element={
-                                    <PrivateRoute>
+                                    <AdminRoute>
                                         <Container>
                                             <Header />
                                             <NavBar />
                                             <ProblemFormPage />
                                         </Container>
-                                    </PrivateRoute>
+                                    </AdminRoute>
                                 }
                             />
 
                             <Route
                                 path="/admin/problem/:problemid"
                                 element={
-                                    <PrivateRoute>
+                                    <AdminRoute>
                                         <Container>
                                             <Header />
                                             <NavBar />
                                             <ProblemFormPage />
                                         </Container>
-                                    </PrivateRoute>
+                                    </AdminRoute>
                                 }
                             />
 

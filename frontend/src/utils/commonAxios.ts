@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const commonAxios = axios.create({
-    baseURL: 'http://localhost:3000/',
+    baseURL: 'http://localhost:3000',
+    //'http://ec2-54-180-29-166.ap-northeast-2.compute.amazonaws.com:3000/',
     withCredentials: true,
 });
 

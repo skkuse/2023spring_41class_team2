@@ -1,15 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { commonAxios } from '../utils/commonAxios';
-import {
-    Container,
-    Row,
-    Col,
-    Card,
-    Form,
-    Button,
-    Alert,
-} from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getCookie } from '../utils/getCookie';
 import { styled } from 'styled-components';
 import { UserContext } from '../utils/UserProvider';
@@ -64,7 +56,8 @@ const LandPage: React.FC = () => {
                 response.data.isAdmin,
                 response.data.userid,
                 response.data.nickname,
-                response.data.email
+                response.data.email,
+                response.data.isBanned
             );
 
             console.log('fetchMyInfo success');
