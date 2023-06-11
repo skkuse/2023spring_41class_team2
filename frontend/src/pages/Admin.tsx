@@ -47,7 +47,7 @@ const Admin: React.FC = () => {
     useEffect(() => {
         getUserList();
         getProblemList();
-    }, [location.search]);
+    }, []);
 
     return (
         <Container
@@ -78,7 +78,9 @@ const Admin: React.FC = () => {
                             <Nav.Link
                                 active={location.search === '?tab=manageuser'}
                             >
-                                <StyledText>Manage User</StyledText>
+                                <StyledText style={{ color: 'white' }}>
+                                    Manage User
+                                </StyledText>
                             </Nav.Link>
                         </LinkContainer>
                     </Nav.Item>
@@ -94,7 +96,9 @@ const Admin: React.FC = () => {
                                     location.search === '?tab=manageproblem'
                                 }
                             >
-                                <StyledText>Manage Problem</StyledText>
+                                <StyledText style={{ color: 'white' }}>
+                                    Manage Problem
+                                </StyledText>
                             </Nav.Link>
                         </LinkContainer>
                     </Nav.Item>
@@ -106,16 +110,18 @@ const Admin: React.FC = () => {
                 style={{ minWidth: '1000px', flexGrow: 10 }}
             >
                 <h1>
-                    <StyledText>Admin Page</StyledText>
+                    <StyledText style={{ color: 'black' }}>
+                        Admin Page
+                    </StyledText>
                 </h1>
                 {(location.search === '' ||
-                    location.search === '?tab=manageuser') && (
-                    <UserManageList data={userList} />
-                )}
+                    location.search === '?tab=manageuser') &&
+                    userList.length > 0 && <UserManageList data={userList} />}
 
-                {location.search === '?tab=manageproblem' && (
-                    <ProblemManageList data={problemList} />
-                )}
+                {location.search === '?tab=manageproblem' &&
+                    problemList.length > 0 && (
+                        <ProblemManageList data={problemList} />
+                    )}
             </Card>
         </Container>
     );

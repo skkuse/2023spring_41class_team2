@@ -30,6 +30,7 @@ const UserManageList: React.FC<UserManageListProps> = ({ data }) => {
         }
         const mydata = {
             isBanned: flag,
+            unbannedAt: Date.now(),
         };
         commonAxios
             .patch(`/users/${userid}/ban`, mydata, {
@@ -96,7 +97,9 @@ const UserManageList: React.FC<UserManageListProps> = ({ data }) => {
 
     return (
         <div>
-            <StyledHeaderText>User Manage List</StyledHeaderText>
+            <StyledHeaderText style={{ color: 'black' }}>
+                User Manage List
+            </StyledHeaderText>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -121,7 +124,6 @@ const UserManageList: React.FC<UserManageListProps> = ({ data }) => {
                                 {user.isAdmin ? 'O' : ''}
                             </td>
                             <td className="text-center">
-                                <Button className="mx-2">Info</Button>
                                 {!user.isAdmin && (
                                     <Button
                                         className="mx-2"

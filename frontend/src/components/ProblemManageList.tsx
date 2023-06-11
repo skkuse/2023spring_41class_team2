@@ -10,7 +10,9 @@ type ProblemManageListProps = {
 const ProblemManageList: React.FC<ProblemManageListProps> = ({ data }) => {
     return (
         <div>
-            <StyledHeaderText>Problem Manage List</StyledHeaderText>
+            <StyledHeaderText style={{ color: 'black' }}>
+                Problem Manage List
+            </StyledHeaderText>
 
             <Table striped bordered hover>
                 <thead>

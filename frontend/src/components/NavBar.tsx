@@ -52,6 +52,7 @@ const NavBarContainer = styled.div`
     justify-content: center;
     align-items: center;
     margin: auto;
+    margin-bottom: 20px;
     background-color: ${(props) => props.theme.colors.background};
     text-align: right;
 `;
@@ -71,7 +72,7 @@ const StyledLink = styled(Link)`
 const NavBarText = styled.span`
     font-size: 20px;
     margin-right: 20px;
-    color: ${(props) => props.theme.colors.black};
+    color: ${(props) => props.theme.colors.white};
     text-decoration: none;
     font-weight: bold;
 `;

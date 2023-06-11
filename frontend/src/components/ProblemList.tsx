@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Table } from 'react-bootstrap';
-import { StyledText } from '../styles/StyledText';
+import { StyledHeaderText } from '../styles/StyledText';
 import { Link } from 'react-router-dom';
+import { styled } from 'styled-components';
 
 type ProblemListProps = {
     problemData: { id: number; title: string; solvedList: any }[];
@@ -22,10 +23,11 @@ const ProblemList: React.FC<ProblemListProps> = ({
     }));
 
     return (
-        <div>
-            <h3>
-                <StyledText>Problem List</StyledText>
-            </h3>
+        <ProblemListContainer>
+            <StyledHeaderText style={{ color: 'black' }}>
+                Problem List
+            </StyledHeaderText>
+
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -50,8 +52,15 @@ const ProblemList: React.FC<ProblemListProps> = ({
                     ))}
                 </tbody>
             </Table>
-        </div>
+        </ProblemListContainer>
     );
 };
 
 export default ProblemList;
+
+const ProblemListContainer = styled.div`
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;

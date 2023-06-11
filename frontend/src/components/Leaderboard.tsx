@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { StyledText } from '../styles/StyledText';
+import { StyledHeaderText } from '../styles/StyledText';
+import { styled } from 'styled-components';
 
 type LeaderboardProps = {
     data: { nickname: string; credit: number }[];
@@ -8,14 +9,15 @@ type LeaderboardProps = {
 
 const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
     return (
-        <div>
-            <h3>
-                <StyledText>Leaderboard</StyledText>
-            </h3>
+        <LeaderboardContainer>
+            <StyledHeaderText style={{ color: 'black' }}>
+                Leaderboard
+            </StyledHeaderText>
+
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th className="text-center">#</th>
+                        <th className="text-center">Rank</th>
                         <th className="text-center">User</th>
                         <th className="text-center">Credit</th>
                     </tr>
@@ -23,15 +25,22 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
                 <tbody>
                     {data.map((user, index) => (
                         <tr key={user.nickname}>
-                            <td>{index + 1}</td>
-                            <td>{user.nickname}</td>
-                            <td>{user.credit}</td>
+                            <td className="text-center">{index + 1}</td>
+                            <td className="text-center">{user.nickname}</td>
+                            <td className="text-center">{user.credit}</td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
-        </div>
+        </LeaderboardContainer>
     );
 };
+
+const LeaderboardContainer = styled.div`
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
 
 export default Leaderboard;

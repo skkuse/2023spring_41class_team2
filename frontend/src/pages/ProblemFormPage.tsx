@@ -116,7 +116,9 @@ const ProblemFormPage: React.FC = () => {
             <Row>
                 <Card className="p-4" style={{ minWidth: '200px' }}>
                     <Row>
-                        <StyledHeaderText>Problem Title</StyledHeaderText>
+                        <StyledHeaderText style={{ color: 'black' }}>
+                            Problem Title
+                        </StyledHeaderText>
                         <Form.Control
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -126,7 +128,9 @@ const ProblemFormPage: React.FC = () => {
                                 marginBottom: '10px',
                             }}
                         />
-                        <StyledHeaderText>Problem Description</StyledHeaderText>
+                        <StyledHeaderText style={{ color: 'black' }}>
+                            Problem Description
+                        </StyledHeaderText>
 
                         <Form.Control
                             as="textarea"
@@ -140,6 +144,10 @@ const ProblemFormPage: React.FC = () => {
                                 whiteSpace: 'pre-wrap',
                             }}
                         ></Form.Control>
+
+                        <StyledHeaderText style={{ color: 'black' }}>
+                            Problem Code
+                        </StyledHeaderText>
                         {code && (
                             <CodeEditor
                                 value={code}
@@ -171,7 +179,7 @@ const ProblemFormPage: React.FC = () => {
                             />
                         )}
 
-                        <StyledHeaderText>
+                        <StyledHeaderText style={{ color: 'black' }}>
                             Recommended Questions
                         </StyledHeaderText>
 
@@ -201,7 +209,9 @@ const ProblemFormPage: React.FC = () => {
                                 }}
                             />
                         )}
-                        <StyledHeaderText>Answer</StyledHeaderText>
+                        <StyledHeaderText style={{ color: 'black' }}>
+                            Answer
+                        </StyledHeaderText>
                         <Form.Control
                             value={answer}
                             onChange={(e) => setAnswer(e.target.value)}

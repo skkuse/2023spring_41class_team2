@@ -122,7 +122,9 @@ const MyPage: React.FC = () => {
                                     location.search === '?tab=accountsetting'
                                 }
                             >
-                                <StyledText>Account Setting</StyledText>
+                                <StyledText style={{ color: 'white' }}>
+                                    Account Setting
+                                </StyledText>
                             </Nav.Link>
                         </LinkContainer>
                     </Nav.Item>
@@ -138,7 +140,9 @@ const MyPage: React.FC = () => {
                                     location.search === '?tab=changepassword'
                                 }
                             >
-                                <StyledText>Change Password</StyledText>
+                                <StyledText style={{ color: 'white' }}>
+                                    Change Password
+                                </StyledText>
                             </Nav.Link>
                         </LinkContainer>
                     </Nav.Item>
@@ -152,7 +156,9 @@ const MyPage: React.FC = () => {
                             <Nav.Link
                                 active={location.search === '?tab=sociallinks'}
                             >
-                                <StyledText>Social Links</StyledText>
+                                <StyledText style={{ color: 'white' }}>
+                                    Social Links
+                                </StyledText>
                             </Nav.Link>
                         </LinkContainer>
                     </Nav.Item>
@@ -168,7 +174,9 @@ const MyPage: React.FC = () => {
                                     location.search === '?tab=emailnotification'
                                 }
                             >
-                                <StyledText>Email Notification</StyledText>
+                                <StyledText style={{ color: 'white' }}>
+                                    Email Notification
+                                </StyledText>
                             </Nav.Link>
                         </LinkContainer>
                     </Nav.Item>
@@ -182,14 +190,18 @@ const MyPage: React.FC = () => {
                 {(location.search === '' ||
                     location.search === '?tab=accountsetting') && (
                     <div className="text-center mb-4 flex-fill">
-                        <StyledText>Nickname</StyledText>
+                        <StyledText style={{ color: 'black' }}>
+                            Nickname
+                        </StyledText>
                         <StyledFormControl
                             defaultValue={localNickname}
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) => setLocalNickname(e.target.value)}
                         />
-                        <StyledText>Email</StyledText>
+                        <StyledText style={{ color: 'black' }}>
+                            Email
+                        </StyledText>
                         <StyledFormControl
                             defaultValue={localEmail}
                             onChange={(
@@ -205,20 +217,26 @@ const MyPage: React.FC = () => {
 
                 {location.search === '?tab=changepassword' && (
                     <div className="text-center mb-4 flex-fill">
-                        <StyledText>Current password</StyledText>
+                        <StyledText style={{ color: 'black' }}>
+                            Current password
+                        </StyledText>
                         <StyledFormControl
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) => setCurPassword(e.target.value)}
                         />
-                        <StyledText>New Password</StyledText>
+                        <StyledText style={{ color: 'black' }}>
+                            New Password
+                        </StyledText>
                         <StyledFormControl
                             type="password"
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) => setNewPassword(e.target.value)}
                         />
-                        <StyledText>Retype New Password</StyledText>
+                        <StyledText style={{ color: 'black' }}>
+                            Retype New Password
+                        </StyledText>
                         <StyledFormControl
                             type="password"
                             onChange={(
@@ -233,28 +251,34 @@ const MyPage: React.FC = () => {
 
                 {location.search === '?tab=sociallinks' && (
                     <div className="mb-4 d-flex flex-column">
-                        <StyledHeaderText>
+                        <StyledHeaderText style={{ color: 'black' }}>
                             Link Your Social TAGS
                         </StyledHeaderText>
-                        <StyledText>This feature will release soon.</StyledText>
+                        <StyledText style={{ color: 'black' }}>
+                            This feature will release soon.
+                        </StyledText>
                         <SocialLinkContainer
                             className="m-4"
                             onClick={() =>
                                 window.open('https://github.com', '_blank')
                             }
                         >
-                            <StyledText>Connect Github Account</StyledText>
+                            <StyledText style={{ color: 'black' }}>
+                                Connect Github Account
+                            </StyledText>
                         </SocialLinkContainer>
                     </div>
                 )}
 
                 {location.search === '?tab=emailnotification' && (
                     <div className="mb-4 d-flex flex-column">
-                        <StyledHeaderText>
+                        <StyledHeaderText style={{ color: 'black' }}>
                             Subscription Management
                         </StyledHeaderText>
                         <ToggleContainer>
-                            <StyledText>Claim Notification</StyledText>
+                            <StyledText style={{ color: 'black' }}>
+                                Claim Notification
+                            </StyledText>
                             <ToggleSwitch />
                         </ToggleContainer>
                     </div>

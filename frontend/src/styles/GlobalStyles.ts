@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
     html {
@@ -12,16 +12,16 @@ const GlobalStyles = createGlobalStyle`
         -o-text-size-adjust: none;
 
         overflow-y: scroll;
+        overflow-x: hidden;
     }
     body {
-        background-color: #EBE2E2;
-        color: black;
+        background-color: #15171c;
+        color: #FFFFFF;
     }
 
     input, button { 
         font-family: inherit;
     }
 `;
-
 
 export default GlobalStyles;

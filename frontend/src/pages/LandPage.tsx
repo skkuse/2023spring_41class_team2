@@ -10,7 +10,6 @@ import { toast } from 'react-toastify';
 const LandPage: React.FC = () => {
     const [userid, setUserid] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const navigate = useNavigate();
     const { updateUserContext } = useContext(UserContext);
 
@@ -118,7 +117,6 @@ const LandPage: React.FC = () => {
                                 Log In
                             </Button>
                         </Form>
-                        {error && <Alert variant="danger">{error}</Alert>}
                         <Link to="/signup">
                             <Button
                                 className="btn-primary"

@@ -11,7 +11,7 @@ const StyledLink = styled(Link)`
 const Header: React.FC = () => {
     return (
         <HeaderContainer>
-            <StyledLink to="/">
+            <HeaderLink to="/">
                 <h1 style={{ display: 'inline' }}>
                     <StyledText>Security Edu</StyledText>
                 </h1>
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
                         marginBottom: '30px',
                     }}
                 />
-            </StyledLink>
+            </HeaderLink>
         </HeaderContainer>
     );
 };
@@ -39,4 +39,12 @@ const HeaderContainer = styled.div`
     align-items: center;
     margin-top: 10px;
     background-color: ${(props) => props.theme.colors.header};
+`;
+
+const HeaderLink = styled(Link)`
+    text-decoration: none;
+    display: block;
+    box-sizing: border-box;
+    margin: 0 auto;
+    color: ${(props) => props.theme.colors.white};
 `;

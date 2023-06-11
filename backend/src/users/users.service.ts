@@ -52,6 +52,10 @@ export class UsersService {
       updatedData.email = data.email;
     }
 
+    if (data.isAdmin || data.isAdmin === false) {
+      updatedData.isAdmin = data.isAdmin;
+    }
+
     return this.prisma.user.update({
       where: {
         userid: userId,
