@@ -11,7 +11,7 @@ const LandPage: React.FC = () => {
     const [userid, setUserid] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const { updateUserContext } = useContext(UserContext);
+    const { isBanned, updateUserContext } = useContext(UserContext);
 
     //사용자가 로그인 한 상태일 경우 메인 페이지로 이동
     useEffect(() => {
@@ -29,8 +29,10 @@ const LandPage: React.FC = () => {
             .then(async (response) => {
                 if (response.status === 201) {
                     document.cookie = `accessToken=${response.data.accessToken}; path=/;`;
-                    await fetchMyInfo();
-                    navigate('/main');
+                    const status = await fetchMyInfo();
+                    if (status) {
+                        navigate('/main');
+                    }
                 } else {
                     toast.error('Login failed');
                 }
@@ -49,7 +51,10 @@ const LandPage: React.FC = () => {
                 },
             });
 
-            console.log(response);
+            if (response.data.isBanned) {
+                toast.error('You are banned');
+                return false;
+            }
 
             updateUserContext(
                 response.data.isAdmin,
@@ -59,9 +64,11 @@ const LandPage: React.FC = () => {
                 response.data.isBanned
             );
 
-            console.log('fetchMyInfo success');
+            return true;
         } catch (error) {
             console.log(error);
+
+            return false;
         }
     };
 

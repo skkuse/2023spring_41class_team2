@@ -107,7 +107,8 @@ contract Presale is Tokensale {\n\
       content: Buffer.from(
         'Your task is to set userid varaible to specific value to delete all data in database.\n\
 You can use sqlite3 module to access database.\n\
-Submit the value of userid variable.',
+Submit the value of userid variable.\n\
+Note: all SQL commands should be uppercase.',
         'utf-8',
       ),
       answer: '"; DROP TABLE my_table; --',

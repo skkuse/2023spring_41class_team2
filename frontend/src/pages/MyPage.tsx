@@ -11,7 +11,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 const MyPage: React.FC = () => {
     const location = useLocation();
-    const { isAdmin, userid, nickname, email } = useContext(UserContext);
+    const { isAdmin, isBanned, userid, nickname, email, updateUserContext } =
+        useContext(UserContext);
     const [userInfo, setUserInfo] = useState([]);
     const [localNickname, setLocalNickname] = useState(nickname);
     const [localEmail, setLocalEmail] = useState(email);
@@ -37,6 +38,8 @@ const MyPage: React.FC = () => {
             .catch((err) => {
                 toast.error('Failed to save account information');
             });
+
+        updateUserContext(isAdmin, isBanned, userid, localNickname, localEmail);
     };
 
     const validatePassword = async () => {
